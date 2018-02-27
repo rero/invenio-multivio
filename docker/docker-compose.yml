@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+       - virtualenv-data:/home/invenio/multivio
+       - changeit:/home/invenio/multivio/src:cached
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_DEBUG=1
+volumes:
+  virtualenv-data:
