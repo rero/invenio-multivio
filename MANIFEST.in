@@ -43,6 +43,7 @@ include *.txt
 include LICENSE
 include babel.ini
 include pytest.ini
+include docker/Dockerfile
 recursive-include docs *.bat
 recursive-include docs *.py
 recursive-include docs *.rst
@@ -52,3 +53,7 @@ recursive-include examples *.py
 recursive-include examples *.sh
 recursive-include invenio_multivio *.html
 recursive-include tests *.py
+
+# added by check_manifest.py
+recursive-include docker *.sh
+recursive-include docker *.yml
