@@ -48,12 +48,3 @@ def test_init():
     assert 'invenio-multivio' not in app.extensions
     ext.init_app(app)
     assert 'invenio-multivio' in app.extensions
-
-
-def test_view(app):
-    """Test view."""
-    InvenioMultivio(app)
-    with app.test_client() as client:
-        res = client.get("/")
-        assert res.status_code == 200
-        assert 'Welcome to Invenio-Multivio' in str(res.data)

@@ -32,15 +32,15 @@ from __future__ import absolute_import, print_function
 from flask import Blueprint, render_template
 from flask_babelex import gettext as _
 
-blueprint = Blueprint(
-    'invenio_multivio',
+views = Blueprint(
+    'views',
     __name__,
     template_folder='templates',
     static_folder='static',
 )
 
 
-@blueprint.route("/")
+@views.route("/")
 def index():
     """Render a basic view."""
     return render_template(
