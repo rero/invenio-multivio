@@ -33,6 +33,12 @@ import pytest
 from flask import Flask
 from flask_babelex import Babel
 
+from invenio_multivio import InvenioMultivio
+from invenio_multivio.image.views import views as image_views
+from invenio_multivio.json.views import views as json_views
+from invenio_multivio.pdf.views import views as pdf_views
+from invenio_multivio.views import views
+
 
 @pytest.yield_fixture()
 def instance_path():
@@ -50,7 +56,15 @@ def base_app(instance_path):
         SECRET_KEY='SECRET_KEY',
         TESTING=True,
     )
+
     Babel(app_)
+    InvenioMultivio(app_)
+
+    app_.register_blueprint(views)
+    app_.register_blueprint(pdf_views, url_prefix="/pdf")
+    app_.register_blueprint(json_views, url_prefix="/json")
+    app_.register_blueprint(image_views, url_prefix="/image")
+
     return app_
 
 

@@ -1,0 +1,262 @@
+{
+  "collection": {
+    "record": {
+      "controlfield": [
+        {
+          "tag": "001",
+          "text": "308829"
+        },
+        {
+          "tag": "005",
+          "text": "20180320142230.0"
+        }
+      ],
+      "datafield": [
+        {
+          "tag": "024",
+          "ind1": "8",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "oai:doc.rero.ch:20180320133003-CU"
+            },
+            {
+              "code": "p",
+              "text": "tdhes"
+            },
+            {
+              "code": "p",
+              "text": "dissertation"
+            },
+            {
+              "code": "z",
+              "text": "cdu36"
+            },
+            {
+              "code": "z",
+              "text": "hetsvs"
+            }
+          ]
+        },
+        {
+          "tag": "035",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": {
+            "code": "a",
+            "text": "R008777989"
+          }
+        },
+        {
+          "tag": "041",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": {
+            "code": "a",
+            "text": "fre"
+          }
+        },
+        {
+          "tag": "080",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": {
+            "code": "a",
+            "text": "36"
+          }
+        },
+        {
+          "tag": "100",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": {
+            "code": "a",
+            "text": "Altun, Meral"
+          }
+        },
+        {
+          "tag": "245",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "Processus d'intégration"
+            },
+            {
+              "code": "9",
+              "text": "fre"
+            },
+            {
+              "code": "b",
+              "text": "regard des Turcs du Valais sur la compréhension de ce processus"
+            }
+          ]
+        },
+        {
+          "tag": "300",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": {
+            "code": "a",
+            "text": "1 ressource en ligne"
+          }
+        },
+        {
+          "tag": "502",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "Mémoire de bachelor : Haute Ecole de Travail Social, 2017"
+            },
+            {
+              "code": "9",
+              "text": "2017"
+            }
+          ]
+        },
+        {
+          "tag": "520",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "La présente étude se rapporte aux divers points de vue des migrants turcs qui  habitent en Valais, quant à leur représentation de l’intégration. Elle tend également à  saisir la portée de l’aspect linguistique dans ce processus. Les principales questions  traitées sont : Quelle compréhension les Turcs ont-ils du processus d’intégration ?  Quel indicateur de l’intégration est le plus présent dans les discours ? Que représente  la maîtrise d’une langue nationale ?"
+            },
+            {
+              "code": "9",
+              "text": "fre"
+            }
+          ]
+        },
+        {
+          "tag": "695",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "intégration ; représentation de l’intégration ; migration ; personne étrangère ; Turcs ; langue"
+            },
+            {
+              "code": "9",
+              "text": "fre"
+            }
+          ]
+        },
+        {
+          "tag": "700",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "Cretton, Viviane"
+            },
+            {
+              "code": "e",
+              "text": "Dir."
+            }
+          ]
+        },
+        {
+          "tag": "856",
+          "ind1": "4",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "f",
+              "text": "TB_ALTUN_Meral.pdf"
+            },
+            {
+              "code": "q",
+              "text": "application/pdf"
+            },
+            {
+              "code": "s",
+              "text": "2252341"
+            },
+            {
+              "code": "u",
+              "text": "http://doc.rero.ch/record/308829/files/TB_ALTUN_Meral.pdf"
+            },
+            {
+              "code": "y",
+              "text": "order:1"
+            },
+            {
+              "code": "z",
+              "text": "Texte intégral"
+            }
+          ]
+        },
+        {
+          "tag": "918",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "Travail social"
+            },
+            {
+              "code": "b",
+              "text": "HES-SO Valais - Domaine Santé & Social, Route de la Plaine 2, 3960 Sierre"
+            }
+          ]
+        },
+        {
+          "tag": "919",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "Haute Ecole de Travail Social"
+            },
+            {
+              "code": "b",
+              "text": "Sierre"
+            },
+            {
+              "code": "d",
+              "text": "doc.support@rero.ch"
+            }
+          ]
+        },
+        {
+          "tag": "980",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "code": "a",
+              "text": "DISSERTATION"
+            },
+            {
+              "code": "b",
+              "text": "HETSVS"
+            },
+            {
+              "code": "f",
+              "text": "DISS_BACHELOR"
+            }
+          ]
+        },
+        {
+          "tag": "990",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": {
+            "code": "a",
+            "text": "20180320133003-CU"
+          }
+        }
+      ]
+    }
+  }
+}

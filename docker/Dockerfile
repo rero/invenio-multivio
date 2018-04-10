@@ -5,11 +5,15 @@ LABEL description="Generic browser and visualizer for digital objects."
 
 RUN apt-get update && apt-get install -y curl gnupg \
     && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+    && apt-get install -y zlib1g zlib1g-dev libpng-dev libjpeg-dev\
     && apt-get install -y nodejs gcc git \
     && pip install -U setuptools pip && \
     pip install -U virtualenv && \
     npm install -g node-sass clean-css clean-css-cli requirejs uglify-js
 
+
+RUN pip install pdfminer3k
+RUN pip install pillow-simd
 
 # # Run container as user `invenio` with UID `1000`, which should match
 # # current host user in most situations:
