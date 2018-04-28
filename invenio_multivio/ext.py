@@ -23,13 +23,18 @@
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
 """Generic browser and visualizer for digital objects."""
-
+# ---------------------------- Module ---------------------------------------
 from __future__ import absolute_import, print_function
 
 from flask_babelex import gettext as _
 
 from . import config
-from .views import blueprint
+from .image.views import views as image_views
+from .json.views import views as json_views
+from .pdf.views import views as pdf_views
+from .views import views
+
+# ---------------------------- Class ---------------------------------------
 
 
 class InvenioMultivio(object):
@@ -47,7 +52,10 @@ class InvenioMultivio(object):
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
-        app.register_blueprint(blueprint)
+        app.register_blueprint(views)
+        app.register_blueprint(pdf_views)
+        app.register_blueprint(json_views)
+        app.register_blueprint(image_views)
         app.extensions['invenio-multivio'] = self
 
     def init_config(self, app):

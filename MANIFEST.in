@@ -51,7 +51,9 @@ recursive-include docs *.txt
 recursive-include docs Makefile
 recursive-include examples *.py
 recursive-include examples *.sh
-recursive-include invenio_multivio *.html
+recursive-include samples-tests *.*
+
+recursive-include invenio_multivio *.html *.py
 recursive-include tests *.py
 
 # added by check_manifest.py

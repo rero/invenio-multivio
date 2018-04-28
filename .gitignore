@@ -60,3 +60,9 @@ target/
 
 # Vim swapfiles
 .*.sw?
+
+\.pytest_cache/v/cache/
+
+\.pytest_cache/v/pep8/
+
+\.ropeproject/
