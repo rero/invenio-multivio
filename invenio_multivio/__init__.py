@@ -28,5 +28,9 @@ from __future__ import absolute_import, print_function
 
 from .ext import InvenioMultivio
 from .version import __version__
+from .image.views import views as image_views
+from .json.views import views as json_views
+from .pdf.views import views as pdf_views
 
-__all__ = ('__version__', 'InvenioMultivio')
+__all__ = ('__version__', 'InvenioMultivio', 'image_views',
+           'json_views', 'pdf_views')
