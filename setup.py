@@ -26,17 +26,14 @@
 
 import os
 import sys
-
-from setuptools import Extension, find_packages, setup
-
-import invenio_multivio
+from setuptools import find_packages, setup, Extension
 
 poppler_install_path = '/usr/local'
 
 try:
     from Cython.Build import cythonize
 except ImportError:
-    print('You need to install cython first - sudo pip install cython', file=sys.stderr)
+    print('You need to install cython first - pip install cython', file=sys.stderr)
     sys.exit(1)
 
 poppler_ext = Extension('poppler._mypoppler', ['poppler/mypoppler.pyx'],
@@ -78,9 +75,12 @@ setup_requires = [
 install_requires = [
     'Flask-BabelEx>=0.9.2',
     'redis',
-    'invenio-app>=1.0.0b2',
-    'invenio-i18n>=1.0.0b4',
-    'invenio-assets>=v1.0.0b7'
+    'invenio-app>=1.0.0',
+    'invenio-i18n>=1.0.0',
+    'invenio-assets>=v1.0.0',
+    'invenio-theme>=v1.0.0',
+    'pillow-simd<5.0.0',
+    'cython>=0.28.0'
 ]
 
 packages = find_packages()
