@@ -26,8 +26,8 @@
 from __future__ import absolute_import, print_function
 
 import json
-import string
 import subprocess
+import string
 from io import BytesIO
 
 from flask import Blueprint, jsonify, render_template
@@ -36,8 +36,6 @@ from PIL import Image
 from poppler import _mypoppler
 
 from ..config import SITE_ROOT
-from ..image.api import ImageProcessor
-
 # ---------------------------- Class ---------------------------------------
 
 
@@ -56,13 +54,17 @@ class PDF(object):
         self.interpreter = None
         self.stringToFind = None
 
-    def loadPDF(self):
+    def load(self):
         """Loading the pdf."""
         self.doc = _mypoppler.Document(self.data)
 
-    def get_image_pdf(self):
-        """Process page to get image of page."""
-        return "Not implemented"
+    def render_page(self, page_number=1):
+        rendered_page = self.doc.get_image(page_number)
+        width = rendered_page._getWidth()
+        height = rendered_page._getHeight()
+        bitmap = rendered_page._getBitmap()
+        image = Image.frombytes('RGB', (width, height), bitmap)
+        return image
 
     def get_text_page_all(self):
         """Process page to get text contained in the document."""
@@ -97,7 +99,6 @@ class PDF(object):
         return self.doc._getInfo2()
 
     def parse_layout(self, pageNumber):
-        """Process page to parse the layout."""
         for p in self.doc:
             for f in p:
                 for b in f:
@@ -142,7 +143,6 @@ class PDF(object):
                                     res_Search[1].append(p.page_no)     # Page
 
     def find_sublist(sub, list):
-        """Process page to parse the layout."""
         indices = []
         if not list:
             return -1

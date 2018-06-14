@@ -31,9 +31,9 @@ import json
 import subprocess
 from io import BytesIO
 
-import urllib3
-from flask import Blueprint, jsonify, render_template, send_file
+from flask import Blueprint, jsonify, render_template, send_file, current_app, abort
 from flask_babelex import gettext as _
+import urllib3
 
 from .api import PDF
 
@@ -106,3 +106,20 @@ def get_image_pdf(path_pdf, number_page=1):
     r = http.request('GET', path_pdf)
 
     return r.data
+
+
+@views.route('/render/<int:page_number>/<path:path>', methods=['GET'])
+def render_page(path, page_number=1):
+    """Get image from the pdf."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+
+    path = file_to_path(path)
+    if not path:
+        abort(404)
+    doc = PDF(path)
+    doc.load()
+    img = doc.render_page(page_number)
+    data = BytesIO()
+    img.save(data, 'jpeg')
+    data.seek(0)
+    return send_file(data, mimetype='image/jpeg')

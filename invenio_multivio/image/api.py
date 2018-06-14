@@ -30,11 +30,11 @@ from io import BytesIO
 
 from flask import Blueprint, jsonify, render_template, send_file
 from flask_babelex import gettext as _
-from PIL import Image
+from PIL import Image as PILImage
 
 
 # ---------------------------- Class ---------------------------------------
-class ImageProcessor():
+class Image():
     """Class ImageProcessor."""
 
     def __init__(self, pil_img):
@@ -50,18 +50,25 @@ class ImageProcessor():
         """Rotate the image."""
         self.pil_img = self.pil_img.rotate(angle, expand=True)
 
+    @property
+    def jpeg(self):
+        self.byte_io.seek(0)
+        self.pil_img.save(self.byte_io, 'jpeg')
+        self.byte_io.seek(0)
+        return self.byte_io
+
     def transform(self):
         """Transform the image to format BytesIO."""
-        self.pil_img.save(self.byte_io, 'JPEG')
+        self.pil_img.save(self.byte_io, 'jpeg')
         self.byte_io.seek(0)
 
     def thumbnail(self, size):
         """Create the thumbnail."""
-        self.pil_img.thumbnail(size, Image.ANTIALIAS)
+        self.pil_img.thumbnail(size, PILImage.ANTIALIAS)
 
     def resize(self, size):
         """Resize the image."""
-        self.pil_img = self.pil_img.resize((size), Image.CUBIC)
+        self.pil_img = self.pil_img.resize((size), PILImage.CUBIC)
 
     def crop(self, left, upper, right, lower):
         """Crop the image."""
