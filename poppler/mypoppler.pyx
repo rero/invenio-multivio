@@ -4,7 +4,7 @@ from libcpp.string cimport string
 from cpython cimport bool as PyBool
 from cpython.object cimport Py_EQ, Py_NE, PyObject
 from cpython.bytes cimport PyBytes_FromStringAndSize
-from cpython.unicode cimport PyUnicode_FromUnicode, PyUnicode_InternFromString
+from cpython.unicode cimport PyUnicode_FromUnicode, PyUnicode_InternFromString, PyUnicode_AsUTF8String
 from cpython.list cimport PyList_New, PyList_Size, PyList_Append
 from cpython.mem cimport PyMem_Free, PyObject_Malloc
 from cpython.dict cimport PyDict_SetItemString, PyDict_New
@@ -261,14 +261,15 @@ def init():
 
 cdef class Document:
   cdef:
-      PDFDoc *_doc
+      PDFDoc* _doc
+      GooString* file_name;
       int _pg
       PyBool phys_layout
       double fixed_pitch
       list toc
 
-  def __cinit__(self, char *fileNameA,  PyBool phys_layout=False, double fixed_pitch=0):
-      self._doc =  PDFDocFactory().createPDFDoc(GooString(fileNameA))
+  def __cinit__(self, Py_UNICODE* fileNameA,  PyBool phys_layout=False, double fixed_pitch=0):
+      self._doc =  PDFDocFactory().createPDFDoc(GooString(PyUnicode_AsUTF8String(fileNameA)))
       self._pg=0
       self.toc = []
       self.phys_layout=phys_layout
@@ -277,6 +278,8 @@ cdef class Document:
   def __dealloc__(self):
       if self._doc != NULL:
           del self._doc
+      if self._doc != NULL:
+          del self.file_name
 
   def _getNumPages(self):
       return self._doc.getNumPages()

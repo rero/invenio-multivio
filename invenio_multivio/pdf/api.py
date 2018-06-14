@@ -55,7 +55,7 @@ class PDF(object):
         self.interpreter = None
         self.stringToFind = None
 
-    def loadPDF(self):
+    def load(self):
         """Loading the pdf."""
         self.doc = _mypoppler.Document(self.data)
 

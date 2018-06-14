@@ -1,121 +1,92 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from poppler import _mypoppler
+#
+# This file is part of Invenio.
+# Copyright (C) 2018 RERO.
+#
+# Invenio is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# Invenio is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Invenio; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#
+# In applying this license, RERO does not
+# waive the privileges and immunities granted to it by virtue of its status
+# as an Intergovernmental Organization or submit itself to any jurisdiction.
+
+"""Tests for poppler cython wrapping."""
+
 from PIL import Image
-import string
 import io
 
 
-def find_sublist(sub, list):
-    indices = []
-    if not list:
-        return -1
-    if not sub:
-        return 0
-    first, rest = sub[0], sub[1:]
-    pos = 0
-    try:
-        while True:
-            pos = list.index(first, pos) + 1
-            if not rest or list[pos:pos+len(rest)] == rest:
-                indices.append(pos - 1)
-    except ValueError:
-        return indices
+def test_doc(simple_pdf_doc):
+    """Test poppler document creation."""
+    assert simple_pdf_doc
 
 
-# TEST EXTRACTION
-print('############################## START ####################################')
-res_Search = [[], []]
-d = _mypoppler.Document(('./../../samples-tests/document.pdf').encode('utf-8'))
-print('No of pages', d.no_of_pages)
-stringToFind = "multivio".lower()
-text = 'Mot Recherché -->'
-print(text, stringToFind)
-print()
-for p in d:
-    for f in p:
-        for b in f:
-            for l in b:
-                if stringToFind in l.text.lower():
-                    temp = ""
-                    bboxTemp = []
-                    tmpListe = []
-                    bboxList = []
-                    isFirsCaracter = True
-                    for i in range(len(l.text)):
-                        if (l.text[i] in string.punctuation) or (l.text[i] in ' '):
-                            if temp != "":
-                                tmpListe.append(temp)
-                                bboxList.append(bboxTemp)
-                            temp = ""
-                            bboxTemp = []
-                            isFirsCaracter = True
-                        else:
-                            temp += l.text[i].lower()
-                            if isFirsCaracter is True:
-                                bboxTemp = list(l.char_bboxes[i].as_tuple())
-                                isFirsCaracter = False
-                            else:
-                                bboxTemp[2] = l.char_bboxes[i].x2
-                    if temp != "":
-                        tmpListe.append(temp)
-                        bboxList.append(bboxTemp)
-                    if ' ' in stringToFind:
-                        words = stringToFind.split(' ')
-                        indices = find_sublist(words, tmpListe)
-                        for j in indices:
-                            bboxRes = list([bboxList[j][0], bboxList[j][1],
-                                            bboxList[j+len(words)-1][2], bboxList[j][3]])
-                            res_Search[0].append(bboxRes)   # BBox
-                            res_Search[1].append(p.page_no)
-                    else:
-                        indices = [i for i, s in enumerate(
-                            tmpListe) if stringToFind in s]
-                        for i in indices:
-                            res_Search[0].append(bboxList[i])   # BBox
-                            res_Search[1].append(p.page_no)     # Page
-                    print(l.text,
-                          '(%0.2f, %0.2f, %0.2f, %0.2f)' % l.bbox.as_tuple())
-                    print()
-                    # assert l.char_fonts.comp_ratio < 1.0
-                    # for i in range(len(l.text)):
-                    #     print(l.text[i].encode('UTF-8'), '(%0.2f, %0.2f, %0.2f, %0.2f)' %
-                    #           l.char_bboxes[i].as_tuple(),)
-
-print()
-print("Print Results search")
-print(res_Search)
-print()
-# TOC TEST
-print("TOC:")
-print(d._getToc())
-print()
-
-# TOC TEST
-print("DOC INFO:")
-print(d._getInfo2())
-print()
-#
-# print("DOC INFO_MY:")
-# print(d._getInfo())
-# print()
-
-print("Image generation ...")
-im = d.get_image(1)
-# print("Scale:")
-# print(im._getScale())
-new_width = im._getWidth()
-new_height = im._getHeight()
-image_data = im._getBitmap()
-# print(new_width)
-# print(new_height)
-# print(type(image_data))
-pil = Image.frombytes('RGB', (new_width, new_height), image_data)
-temp_file = io.BytesIO()
-pil.save("out.jpg", "JPEG", quality=100)
-print("Image OK")
-# temp_file.seek(0)
-# content = temp_file.read()
+def test_n_pages(simple_pdf_doc):
+    """Test number of pages."""
+    assert simple_pdf_doc.no_of_pages == 3
 
 
-# p = d.get_page(1)
+def test_toc(simple_pdf_doc):
+    """Test table of content extraction."""
+    toc = simple_pdf_doc._getToc()
+    assert toc
+    assert toc == [
+        {'label': 'Introduction', 'page_number': 1},
+        {'label': 'Context', 'page_number': 1},
+        {'label': 'Goals', 'page_number': 2, 'childs': [
+            {'label': 'Generic', 'page_number': 2}]},
+        {'label': 'Functional and complete', 'page_number': 2},
+        {'label': 'Flexible', 'page_number': 2},
+        {'label': 'Extensible and autonomous', 'page_number': 3},
+        {'label': 'Sponsorship', 'page_number': 3}
+    ]
+
+
+def test_docinfo(simple_pdf_doc):
+    """Test pdf metadata extraction."""
+    info = simple_pdf_doc._getInfo2()
+    assert info
+    assert info == {
+        'Author': 'Miguel Moreira',
+        'Title': 'Multivio: Project description',
+        'Subject': 'Multivio a new project.',
+        'Creator': 'LaTeX with hyperref package',
+        'Producer': 'pdfTeX-1.40.10',
+        'Keywords': 'PDF, Multivio',
+        'CreationDate': "D:20100615101539+02'00'",
+        'ModDate': "D:20100615101539+02'00'",
+        'PTEX.Fullbanner': 'This is pdfTeX, Version 3.1415926-1.40.10-2.2'
+                           ' (TeX Live 2009) kpathsea version 5.0.0'
+    }
+
+
+def test_render(simple_pdf_doc):
+    """Test the first page rendering."""
+    rendered_page = simple_pdf_doc.get_image(1)
+    assert rendered_page
+    width = rendered_page._getWidth()
+    assert width == 595
+    height = rendered_page._getHeight()
+    assert height == 842
+    bitmap = rendered_page._getBitmap()
+    image = Image.frombytes('RGB', (width, height), bitmap)
+    assert image
+    assert image.width == width
+    assert image.height == height
+    memory_file = io.BytesIO()
+    image.save(memory_file, 'ppm')
+    memory_file.seek(0)
+    n_bytes = len(memory_file.read())
+    assert n_bytes > width * height * 3

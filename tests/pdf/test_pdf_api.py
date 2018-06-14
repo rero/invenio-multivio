@@ -22,14 +22,16 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-"""Test example app."""
-from __future__ import absolute_import, print_function
+"""Test PDF API."""
 
+from invenio_multivio.pdf.api import PDF
 import os
-import signal
-import subprocess
-import time
-from os.path import abspath, dirname, join
 
-import pytest
-from flask import Flask, url_for
+
+def test_search_text():
+    """Test search capabilities."""
+    file_name = file_name = os.path.join(os.path.dirname(__file__),
+                                         '../data/document.pdf')
+    pdf = PDF(file_name)
+    assert pdf
+    pdf.load()
