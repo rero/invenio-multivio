@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-# This file is part of Invenio.
-# Copyright (C) 2018 RERO.
-#
 # Invenio is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
 # published by the Free Software Foundation; either version 2 of the
@@ -32,15 +27,15 @@ from __future__ import absolute_import, print_function
 from flask import Blueprint, render_template
 from flask_babelex import gettext as _
 
-blueprint = Blueprint(
-    'invenio_multivio',
+views = Blueprint(
+    'views',
     __name__,
     template_folder='templates',
     static_folder='static',
 )
 
 
-@blueprint.route("/")
+@views.route("/")
 def index():
     """Render a basic view."""
     return render_template(
