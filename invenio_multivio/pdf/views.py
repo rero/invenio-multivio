@@ -31,9 +31,9 @@ import json
 import subprocess
 from io import BytesIO
 
+import urllib3
 from flask import Blueprint, jsonify, render_template, send_file
 from flask_babelex import gettext as _
-import urllib3
 
 from .api import PDF
 

@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from poppler import _mypoppler
-from PIL import Image
-import string
 import io
+import string
+
+from PIL import Image
+from poppler import _mypoppler
 
 
 def find_sublist(sub, list):
