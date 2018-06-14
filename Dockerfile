@@ -29,10 +29,8 @@ RUN mkdir -p /code/poppler/build && cd /code/poppler/build \
 
 # make libpoppler globally available
 RUN ldconfig /usr/local/lib
-# WORKDIR /home/invenio/multivio/src/invenio-multivio/
-# RUN echo "$PWD"
-# COPY ./../setup.py .
-# RUN pip install --global-option=build_ext .
+WORKDIR /home/invenio/multivio/src/invenio-multivio/
+RUN pip install --global-option=build_ext .
 
 # # Run container as user `invenio` with UID `1000`, which should match
 # # current host user in most situations:

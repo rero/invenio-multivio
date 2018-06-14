@@ -60,3 +60,9 @@ target/
 
 # Vim swapfiles
 .*.sw?
+
+\.pytest_cache/v/cache/
+
+\.ropeproject/
+
+poppler/mypoppler\.cpp
