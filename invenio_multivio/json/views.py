@@ -33,7 +33,6 @@ from flask_babelex import gettext as _
 from PIL import Image
 
 from ..config import SITE_ROOT
-from ..image.api import ImageProcessor
 
 # --------------------------- Blueprint --------------------------------------
 views = Blueprint(
