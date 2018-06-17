@@ -1,0 +1,211 @@
+{
+  "collection": {
+    "record": {
+      "controlfield": [
+        {
+          "001":"309302"
+        },
+        {
+          "005": "20180524143941.0"
+        }
+      ],
+      "datafield": [
+        {
+          "tag": "024",
+          "ind1": "8",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a" : "oai:doc.rero.ch:20180524141304-DS"
+            },
+            {
+              "p" : "tdhes"
+            },
+            {
+              "p": "rero_explore"
+            },
+            {
+              "p": "dissertation"
+            },
+            {
+              "z": "heivs"
+            },
+            {
+              "z": "cdu6"
+            }
+          ]
+        },
+        {
+          "tag": "041",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [{
+            "a": "fre"
+          }]
+        },
+        {
+          "tag": "080",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [{
+            "a": "6"
+          }]
+        },
+        {
+          "tag": "100",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [{
+            "a": "Comte, David"
+          }]
+        },
+        {
+          "tag": "245",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a" : "Implémentation embarquée d'un signal Doppler"
+            },
+            {
+              "9" : "fre"
+            }
+          ]
+        },
+        {
+          "tag": "502",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "Mémoire de bachelor : Haute Ecole d'Ingénierie, 2017"
+            },
+            {
+              "9": "2017"
+            }
+          ]
+        },
+        {
+          "tag": "520",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "La LDF est une technique de vélocimétrie utilisant l’effet Doppler pour mesurer le flux  sanguin dans l’oeil. En ophtalmologie, la LDF permet, entre autres, de déterminer des  paramètres hémodynamiques utiles pour la détection de maladies dans l’oeil. Les  paramètres hémodynamiques sont : ChBVel qui est la vitesse du sang, ChBVol qui  est le volume de sang et ChBF qui est le flux du sang. Le système développé permet  l’acquisition et le traitement d’un signal Doppler sur une carte embarquée. Une  interface web pilote le système. Elle permet : De faire des mesures, de calculer les  paramètres hémodynamiques et de récupérer les résultats."
+            },
+            {
+              "9": "fre"
+            }
+          ]
+        },
+        {
+          "tag": "695",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "Instruments de mesure pour l'optique médicale et ophtalmologique (instruments d'optique) ; Effet Doppler (optique) ; Vitesse de circulation du sang (physiologie)"
+            },
+            {
+              "9": "fre"
+            }
+          ]
+        },
+        {
+          "tag": "700",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "Kandaswamy, Djano"
+            },
+            {
+              "e": "Dir."
+            }
+          ]
+        },
+        {
+          "tag": "856",
+          "ind1": "4",
+          "ind2": " ",
+          "subfield": [
+            {
+              "f": "comte_d_rapport_final.pdf"
+            },
+            {
+              "q": "application/pdf"
+            },
+            {
+              "s": "1494561"
+            },
+            {
+              "u": "http://doc.rero.ch/record/309302/files/comte_d_rapport_final.pdf"
+            },
+            {
+              "y": "order:1"
+            },
+            {
+              "z": "Texte intégral"
+            }
+          ]
+        },
+        {
+          "tag": "918",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "Systèmes industriels - Systemtechnik"
+            },
+            {
+              "c": "Infotronics"
+            },
+            {
+              "b": "HES-SO Valais - Domaine Sciences de l'ingénieur, Route du Rawyl 47, Case postale 2134, 1950 Sion 2"
+            }
+          ]
+        },
+        {
+          "tag": "919",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "Haute Ecole d'Ingénierie"
+            },
+            {
+              "b": "Sion"
+            },
+            {
+              "d": "doc.support@rero.ch"
+            }
+          ]
+        },
+        {
+          "tag": "980",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [
+            {
+              "a": "DISSERTATION"
+            },
+            {
+              "b": "HEIVS"
+            },
+            {
+              "f": "DISS_BACHELOR"
+            }
+          ]
+        },
+        {
+          "tag": "990",
+          "ind1": " ",
+          "ind2": " ",
+          "subfield": [{
+            "a": "20180524141304-DS"
+          }]
+        }
+      ]
+    }
+  }
+}
