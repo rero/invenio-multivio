@@ -26,6 +26,7 @@
 # ---------------------------- Modules ---------------------------------------
 from __future__ import absolute_import, print_function
 
+import os
 from io import BytesIO
 
 from flask import Blueprint, jsonify, render_template, send_file
@@ -34,46 +35,49 @@ from PIL import Image as PILImage
 
 
 # ---------------------------- Class ---------------------------------------
-class Image():
+class ImageProcessor():
     """Class ImageProcessor."""
 
-    def __init__(self, pil_img):
+    def __init__(self, pil_img, path):
         """Initializing the object."""
+        self.path = path
         self.pil_img = pil_img
         self.byte_io = BytesIO()
-
-    def set_image(self, pil_img):
-        """Set the image."""
-        self.pil_img = pil_img
+        self.width = self.pil_img.size[0]
+        self.height = self.pil_img.size[1]
 
     def rotate(self, angle):
         """Rotate the image."""
         self.pil_img = self.pil_img.rotate(angle, expand=True)
 
+    def get_metadata(self):
+        """Get image infos."""
+        metadata = {}
+        metadata['title'] = self.path.split('/')[-1]
+        metadata['mime'] = "image/jpeg"
+        metadata['fileSize'] = self.get_file_size()
+        metadata['defaultNativeSize'] = (self.width, self.height)
+        return metadata
+
+    def get_sizes(self):
+        """Get the sizes of the image."""
+        size = {
+            'height': self.height,
+            'width': self.width
+        }
+        return size
+
+    def get_file_size(self):
+        """Get image size."""
+        return os.stat(self.path).st_size
+
     @property
     def jpeg(self):
-        self.byte_io.seek(0)
+        """Get the image as JPEG."""
         self.pil_img.save(self.byte_io, 'jpeg')
         self.byte_io.seek(0)
         return self.byte_io
 
-    def transform(self):
-        """Transform the image to format BytesIO."""
-        self.pil_img.save(self.byte_io, 'jpeg')
-        self.byte_io.seek(0)
-
     def thumbnail(self, size):
         """Create the thumbnail."""
-        self.pil_img.thumbnail(size, PILImage.ANTIALIAS)
-
-    def resize(self, size):
-        """Resize the image."""
-        self.pil_img = self.pil_img.resize((size), PILImage.CUBIC)
-
-    def crop(self, left, upper, right, lower):
-        """Crop the image."""
-        self.pil_img = self.pil_img.crop((left, upper, right, lower))
-
-    def json(self):
-        """Rotate json form object."""
-        return self.__dict__
+        self.pil_img = self.pil_img.thumbnail(size, PILImage.ANTIALIAS)

@@ -26,73 +26,58 @@
 # ---------------------------- Modules ---------------------------------------
 from __future__ import absolute_import, print_function
 
-from flask import Blueprint, send_file, current_app, abort, request
+from flask import Blueprint, abort, current_app, jsonify, request, send_file
+from PIL import Image as PIL_Image
 
-from PIL import Image as PILImage
-from .api import Image
+from .api import ImageProcessor
 
 # ---------------------------- Blueprint --------------------------------------
 views = Blueprint(
     'image_views',
     __name__,
-    url_prefix="/image"
+    url_prefix="/api-image",
 )
 
 # ---------------------------- API Routes API ---------------------------------
 
 
-@views.route('/<path:path>', methods=['GET'])
+@views.route('/render/<path:path>', methods=['GET'])
 def get_image(path):
-    """Retrive image example."""
+    """Render image."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
     angle = request.args.get('angle')
+    max_width = request.args.get('max_width')
+    max_height = request.args.get('max_height')
     path = file_to_path(path)
     if not path:
         abort(404)
-    img = Image(PILImage.open(path))
+    img = ImageProcessor(PIL_Image.open(path), path)
+    if max_width and max_height:
+        img.thumbnail((int(max_width), int(max_height)))
     if angle:
         img.rotate(int(angle))
     return send_file(img.jpeg, mimetype='image/jpeg')
 
 
-# @views.route('/rotate/<angle>', methods=['GET'])
-# def rotate_to_left(angle):
-#     """Rotate image to left."""
-#     img = ImageProcessor(
-#         Image.open(SITE_ROOT+'/../samples-tests/2048x1280.jpg'))
-#     img.rotate(int(angle))
-#     img.transform()
-#     return send_file(img.byte_io, mimetype='image/jpeg')
+@views.route('/sizes/<path:path>', methods=['GET'])
+def get_sizes(path):
+    """Retrive sizes image."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path)
+    if not path:
+        abort(404)
+    img = ImageProcessor(PIL_Image.open(path), path)
+    sizes = img.get_sizes()
+    return jsonify(sizes)
 
 
-# @views.route('/thumbnail/', methods=['GET'])
-# def thumbnail():
-#     """Retrive thimbnail of image."""
-#     size = 128, 128
-#     img = ImageProcessor(
-#         Image.open(SITE_ROOT+'/../samples-tests/2048x1280.jpg'))
-#     img.thumbnail(size)
-#     img.transform()
-#     return send_file(img.byte_io, mimetype='image/jpeg')
-
-
-# @views.route('/resize/<resize_dimension>/', methods=['GET'])
-# def resize(resize_dimension):
-#     """Retrive the image resized."""
-#     resize_arr = resize_dimension.split('and')
-#     size = int(resize_arr[0]), int(resize_arr[1])
-#     img = ImageProcessor(
-#         Image.open(SITE_ROOT+'/../samples-tests/2048x1280.jpg'))
-#     img.resize(size)
-#     img.transform()
-#     return send_file(img.byte_io, mimetype='image/jpeg')
-
-
-# @views.route('/crop/', methods=['GET'])
-# def crop():
-#     """Retrive the image crepped."""
-#     img = ImageProcessor(
-#         Image.open(SITE_ROOT+'/../samples-tests/2048x1280.jpg'))
-#     img.crop(0, 0, 100, 100)
-#     img.transform()
-#     return send_file(img.byte_io, mimetype='image/jpeg')
+@views.route('/metedata/<path:path>', methods=['GET'])
+def get_metadata(path):
+    """Retrive metedata of the image."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path)
+    if not path:
+        abort(404)
+    img = ImageProcessor(PIL_Image.open(path), path)
+    metadata = img.get_metadata()
+    return jsonify(metadata)

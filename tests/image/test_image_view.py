@@ -22,14 +22,12 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-"""Test example app."""
-from __future__ import absolute_import, print_function
+"""Tests of Blueprint image views."""
+from flask import url_for
 
-import os
-import signal
-import subprocess
-import time
-from os.path import abspath, dirname, join
 
-import pytest
-from flask import Flask, url_for
+def test_image_get_sizes(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            # res = client.get('/api-image/sizes/data/320x200.jpg')
+            assert True
