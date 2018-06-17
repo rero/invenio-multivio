@@ -261,39 +261,39 @@ def init():
 
 cdef class Document:
   cdef:
-      PDFDoc* _doc
+      PDFDoc* doc
       GooString* file_name;
-      int _pg
+      int pg
       PyBool phys_layout
       double fixed_pitch
       list toc
 
   def __cinit__(self, Py_UNICODE* fileNameA,  PyBool phys_layout=False, double fixed_pitch=0):
-      self._doc =  PDFDocFactory().createPDFDoc(GooString(PyUnicode_AsUTF8String(fileNameA)))
-      self._pg=0
+      self.doc =  PDFDocFactory().createPDFDoc(GooString(PyUnicode_AsUTF8String(fileNameA)))
+      self.pg=0
       self.toc = []
       self.phys_layout=phys_layout
       self.fixed_pitch=fixed_pitch
 
   def __dealloc__(self):
-      if self._doc != NULL:
-          del self._doc
-      if self._doc != NULL:
+      if self.doc != NULL:
+          del self.doc
+      if self.doc != NULL:
           del self.file_name
 
-  def _getNumPages(self):
-      return self._doc.getNumPages()
+  def getNumPages(self):
+      return self.doc.getNumPages()
 
-  def _getToc(self):
+  def getToc(self):
       cdef:
         Object* outline
         Object node
         Dict* dict
 
       childs = PyList_New(0)
-      outline = self._doc.getCatalog().getOutline()
+      outline = self.doc.getCatalog().getOutline()
       if (outline != NULL and outline.isDict()):
-          self.newOutlineLevel(<Object* > outline ,<Catalog*> self._doc.getCatalog(), childs, 1)
+          self.newOutlineLevel(<Object* > outline ,<Catalog*> self.doc.getCatalog(), childs, 1)
       return childs
 
   cdef void newOutlineLevel(self, Object* node, Catalog* catalog, list myList, int level):
@@ -395,40 +395,7 @@ cdef class Document:
         if curr.isDict() == False:
           break
 
-  def _getInfo(self):
-      cdef :
-        Object info
-        Object obj
-        int len = 1
-        GooString* s = NULL
-        Dict *info_dict
-        char* key
-
-      dic = {}
-      info = self._doc.getDocInfo()
-      if not info.isDict():
-        return dic
-
-      info_dict = info.getDict()
-
-      for i in range(0,info_dict.getLength()):
-        key = info_dict.getKey(i)
-        key1 = key.decode('utf-8', 'replace')
-        obj = info_dict.lookup(key, 1)
-        if obj.isString():
-          s = obj.takeString()
-          dic[key1] = s.getCString().decode('utf-8', 'replace')
-        elif obj.isName() :
-          dic[key1] = (obj.getName()).decode('utf-8', 'replace')
-        elif obj.isNum() :
-          dic[key1] = obj.getNum()
-        elif obj.isBool() :
-          dic[key1] = obj.getBool()
-        elif obj.isNull() :
-          dic[key1] = ("Aucun").decode('utf-8', 'replace')
-      return dic
-
-  def _getInfo2(self):
+  def getInfo(self):
     cdef:
       Object info
       Object obj
@@ -438,7 +405,7 @@ cdef class Document:
       char *key
 
     dic =  PyDict_New()
-    info = self._doc.getDocInfo()
+    info = self.doc.getDocInfo()
     if not info.isDict():
       return dic
 
@@ -469,22 +436,22 @@ cdef class Document:
       #obj.free();
     return dic
 
-  def _getPageMediaWidth(self, int pg):
-      return self._doc.getPageMediaWidth(pg)
+  def getPageMediaWidth(self, int pg):
+      return self.doc.getPageMediaWidth(pg)
 
-  def _getPageMediaHeight(self, int pg):
-      return self._doc.getPageMediaHeight(pg)
+  def getPageMediaHeight(self, int pg):
+      return self.doc.getPageMediaHeight(pg)
 
-  def _getPagePageRotate(self, int pg):
-      return self._doc.getPageRotate(pg)
+  def getPagePageRotate(self, int pg):
+      return self.doc.getPageRotate(pg)
 
   cdef void render_page(self, OutputDev *dev, int page_no, double hDPI, double vDPI, int rotate, PyBool useMediaBox, PyBool crop, PyBool printing ):
-      self._doc.displayPage(dev, page_no, hDPI, vDPI, rotate, useMediaBox, crop, printing)
+      self.doc.displayPage(dev, page_no, hDPI, vDPI, rotate, useMediaBox, crop, printing)
 
   cdef object get_page_size(self, page_no):
        cdef double w,h
-       w=self._doc.getPageMediaWidth(page_no)
-       h= self._doc.getPageMediaHeight(page_no)
+       w=self.doc.getPageMediaWidth(page_no)
+       h= self.doc.getPageMediaHeight(page_no)
        return (w,h)
 
   def __iter__(self):
@@ -492,19 +459,19 @@ cdef class Document:
 
   property no_of_pages:
       def __get__(self):
-          return self._doc.getNumPages()
+          return self.doc.getNumPages()
 
   def get_page(self, int pg):
       return Page(pg, self)
 
-  def get_image(self, int pg):
-      return Image(pg, self)
+  def get_image(self, int pg, int max_width, int max_height):
+      return Image(pg, self, max_width, max_height)
 
   def __next__(self):
-      if self._pg >= self._getNumPages():
+      if self.pg >= self.getNumPages():
         raise StopIteration()
-      self._pg+=1
-      return self.get_page(self._pg)
+      self.pg+=1
+      return self.get_page(self.pg)
 
 cdef class Page:
   cdef:
@@ -644,25 +611,23 @@ cdef class Line:
     cdef:
         TextLine *line
         double x1, y1, x2, y2
-        unicode _text
-        list _bboxes
-
-
+        unicode text
+        list bboxes
 
     def __cinit__(self, Block block):
         self.line = block.curr_line
 
     def __init__(self, Block block):
-        self._text=u''
+        self.text=u''
         self.x1 = 0
         self.y1 = 0
         self.x2 = 0
         self.y2 = 0
-        self._bboxes=[]
-        self._get_text()
-        assert len(self._text) == len(self._bboxes)
+        self.bboxes=[]
+        self.get_text()
+        assert len(self.text) == len(self.bboxes)
 
-    def _get_text(self):
+    def get_text(self):
         cdef:
             TextWord *w
             GooString *s
@@ -682,8 +647,8 @@ cdef class Line:
                 last_bbox=BBox(bx1,by1,bx2,by2)
                 # if previous word is space update it's right end
                 if i == 0 and words and words[-1] == u' ':
-                    self._bboxes[-1].x2=last_bbox.x1
-                self._bboxes.append(last_bbox)
+                    self.bboxes[-1].x2=last_bbox.x1
+                self.bboxes.append(last_bbox)
             #and then text as UTF-8 bytes
             s=w.getText()
             val = (s.getCString()).decode('UTF-8')
@@ -704,9 +669,9 @@ cdef class Line:
             # add space after word if necessary
             if w.hasSpaceAfter():
                 words.append(u' ')
-                self._bboxes.append(BBox(last_bbox.x2, last_bbox.y1, last_bbox.x2, last_bbox.y2))
+                self.bboxes.append(BBox(last_bbox.x2, last_bbox.y1, last_bbox.x2, last_bbox.y2))
             w=w.getNext()
-        self._text= u''.join(words)
+        self.text= u''.join(words)
 
     property bbox:
         def __get__(self):
@@ -714,11 +679,11 @@ cdef class Line:
 
     property text:
         def __get__(self):
-            return self._text
+            return self.text
 
     property char_bboxes:
         def __get__(self):
-            return self._bboxes
+            return self.bboxes
 
 cdef class Image:
   cdef:
@@ -728,37 +693,36 @@ cdef class Image:
       Document pdf
       bytes data
 
-  def __cinit__(self, int page, Document pdf):
+  def __cinit__(self, int page, Document pdf, int max_width, int max_height):
       self.pdf = pdf
       self.splash = new SplashOutputDev(splashModeRGB8, 3, False, [255,255,255], True, splashThinLineDefault, False)
       self.splash.setFontAntialias(True)
       self.splash.setVectorAntialias(True)
-      self.splash.startDoc(self.pdf._doc)
-      # self.scale = self._getOptimalScale(595.0, 842.0, page) #TODO
-      self.scale = 1.0
-      self.pdf._doc.displayPage(<OutputDev*>self.splash, page, 72*self.scale, 72*self.scale, 0, True, True, False)
+      self.splash.startDoc(self.pdf.doc)
+      self.scale = self.getOptimalScale(max_width, max_height, page)
+      self.pdf.doc.displayPage(<OutputDev*>self.splash, page, 72*self.scale, 72*self.scale, 0, True, True, False)
       self.bitmap = self.splash.getBitmap()
 
-  def _getScale(self):
+  def getScale(self):
       return self.scale
 
-  def _getBitmap(self):
-      data =  <bytes> (<char *>self.bitmap.getDataPtr())[:3*self._getWidth()*self._getHeight()]
+  def getBitmap(self):
+      data =  <bytes> (<char *>self.bitmap.getDataPtr())[:3*self.getWidth()*self.getHeight()]
       return data
 
-  def _getHeight(self):
+  def getHeight(self):
       return self.bitmap.getHeight()
 
-  def _getWidth(self):
+  def getWidth(self):
       return self.bitmap.getWidth()
 
-  def _getOptimalScale(self, max_width, max_height, page_nr):
+  def getOptimalScale(self, max_width, max_height, page_nr):
         """Compute the optimal scale factor."""
         if max_width is None and max_height is None:
             return 1.0
-        page_width = self.pdf._doc.getPageMediaWidth(page_nr)
-        page_height = self.pdf._doc.getPageMediaHeight(page_nr)
-        if(int(self.pdf._doc.getPageRotate(page_nr)) % 180 == 90):
+        page_width = self.pdf.doc.getPageMediaWidth(page_nr)
+        page_height = self.pdf.doc.getPageMediaHeight(page_nr)
+        if(int(self.pdf.doc.getPageRotate(page_nr)) % 180 == 90):
             page_width, page_height = page_height, page_width
 
         page_ratio = page_height/float(page_width)

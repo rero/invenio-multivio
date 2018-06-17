@@ -22,9 +22,9 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 """Generic browser and visualizer for digital objects."""
-from .utils import from_static
 import os
 
+from .utils import from_static
 
 # TODO: remove
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
