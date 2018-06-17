@@ -33,6 +33,7 @@ from .image.views import views as image_views
 from .json.views import views as json_views
 from .pdf.views import views as pdf_views
 from .views import views
+from .xml.views import views as xml_views
 
 # ---------------------------- Class ---------------------------------------
 
@@ -55,6 +56,7 @@ class InvenioMultivio(object):
         app.register_blueprint(views)
         app.register_blueprint(pdf_views)
         app.register_blueprint(json_views)
+        app.register_blueprint(xml_views)
         app.register_blueprint(image_views)
         app.extensions['invenio-multivio'] = self
 
