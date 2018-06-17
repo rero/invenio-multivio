@@ -24,8 +24,9 @@
 
 """Tests for poppler cython wrapping."""
 
-from PIL import Image
 import io
+
+from PIL import Image
 
 
 def test_doc(simple_pdf_doc):
@@ -40,13 +41,15 @@ def test_n_pages(simple_pdf_doc):
 
 def test_toc(simple_pdf_doc):
     """Test table of content extraction."""
-    toc = simple_pdf_doc._getToc()
+    toc = simple_pdf_doc.getToc()
     assert toc
     assert toc == [
         {'label': 'Introduction', 'page_number': 1},
         {'label': 'Context', 'page_number': 1},
         {'label': 'Goals', 'page_number': 2, 'childs': [
-            {'label': 'Generic', 'page_number': 2}]},
+            {'label': 'Generic', 'page_number': 2}
+        ]
+        },
         {'label': 'Functional and complete', 'page_number': 2},
         {'label': 'Flexible', 'page_number': 2},
         {'label': 'Extensible and autonomous', 'page_number': 3},
@@ -56,7 +59,7 @@ def test_toc(simple_pdf_doc):
 
 def test_docinfo(simple_pdf_doc):
     """Test pdf metadata extraction."""
-    info = simple_pdf_doc._getInfo2()
+    info = simple_pdf_doc.getInfo()
     assert info
     assert info == {
         'Author': 'Miguel Moreira',
@@ -74,13 +77,15 @@ def test_docinfo(simple_pdf_doc):
 
 def test_render(simple_pdf_doc):
     """Test the first page rendering."""
-    rendered_page = simple_pdf_doc.get_image(1)
+    rendered_page = simple_pdf_doc.get_image(
+        1, simple_pdf_doc.getPageMediaWidth(1),
+        simple_pdf_doc.getPageMediaHeight(1),)
     assert rendered_page
-    width = rendered_page._getWidth()
+    width = rendered_page.getWidth()
     assert width == 595
-    height = rendered_page._getHeight()
-    assert height == 842
-    bitmap = rendered_page._getBitmap()
+    height = rendered_page.getHeight()
+    assert height == 841
+    bitmap = rendered_page.getBitmap()
     image = Image.frombytes('RGB', (width, height), bitmap)
     assert image
     assert image.width == width
