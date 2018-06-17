@@ -28,44 +28,41 @@ from __future__ import absolute_import, print_function
 
 import json
 
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, current_app, jsonify, render_template
 from flask_babelex import gettext as _
-from PIL import Image
+from PIL import Image as PIL_Image
 
-from ..config import SITE_ROOT
+from .api import JsonProcessor
 
 # --------------------------- Blueprint --------------------------------------
 views = Blueprint(
     'json_views',
     __name__,
-    url_prefix="/json"
+    url_prefix="/api-json"
 )
 
 # ---------------------------- API Routes -------------------------------------
 
 
-@views.route('/marc/', methods=['GET'])
-def get_marc():
-    """Retrive marc in json."""
-    with open(SITE_ROOT+'/../samples-tests/data.json', 'rb') as file_json:
-        d = json.load(file_json)
-        return jsonify(d)
+@views.route('/metadata/<path:path>/', methods=['GET'])
+def get_metadata(path):
+    """Get metadata infos."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path)
+    if not path:
+        abort(404)
+    json = JsonProcessor(path)
+    res = json.get_metadata()
+    return jsonify(res)
 
 
-@views.route('/test/', methods=['GET'])
-def get_json():
-    """Retrive json example."""
-    data = {}
-    data['key'] = 'value'
-    json_data = json.dumps(data)
-    return json_data
-
-
-@views.route('/object/', methods=['GET'])
-def get_json_from_object():
-    """Retrive json example from object."""
-    img = ImageProcessor(None)
-    img.byte_io = "test_io"
-    img.pil_img = "test_pil"
-    json_data = json.dumps(img.json())
-    return json_data
+@views.route('/physical/<path:path>/', methods=['GET'])
+def get_physical_structure(path):
+    """Get the physical structure ."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path)
+    if not path:
+        abort(404)
+    json = JsonProcessor(path)
+    res = json.get_physical_structure()
+    return jsonify(res)

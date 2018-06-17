@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#
+# Image.open(path)
 # This file is part of Invenio.
 # Copyright (C) 2018 RERO.
 #
@@ -22,30 +22,23 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-"""Tests from api JsonProcessor."""
+"""Generic browser and visualizer for digital objects."""
 
-from invenio_multivio.json.api import JsonProcessor
+import json
+import os
 
-
-def test_json(simple_json):
-    """Test poppler document creation."""
-    assert simple_json
+import pytest
 
 
-def test_json_metadata(simple_json):
-    """Test poppler document creation."""
-    json = JsonProcessor(simple_json)
-    res = json.get_metadata()
-    assert res == {'creator': ['Comte, David', 'Kandaswamy, Djano'],
-                   'language': 'fre',
-                   'title': "Implémentation embarquée d'un signal Doppler"}
+@pytest.yield_fixture()
+def simple_json():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__), '../data/doppler.json')
+    yield path
 
 
-def test_json_physical(simple_json):
-    """Test poppler document creation."""
-    json = JsonProcessor(simple_json)
-    res = json.get_physical_structure()
-    assert res == [
-        {'label': 'Texte intégral',
-         'url':
-         'http://doc.rero.ch/record/309302/files/comte_d_rapport_final.pdf'}]
+@pytest.yield_fixture()
+def simple_json_bad():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__), '../data/doppler_bad.json')
+    yield path
