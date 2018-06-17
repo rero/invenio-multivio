@@ -62,6 +62,7 @@ target/
 .*.sw?
 
 .pytest_cache/
+invenio_multivio/static/*
 
 \.ropeproject/
 
