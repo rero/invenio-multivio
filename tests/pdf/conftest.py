@@ -1,4 +1,5 @@
-{#
+# -*- coding: utf-8 -*-
+# Image.open(path)
 # This file is part of Invenio.
 # Copyright (C) 2018 RERO.
 #
@@ -20,11 +21,36 @@
 # In applying this license, RERO does not
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
-#}
 
-{%- extends config.MULTIVIO_BASE_TEMPLATE %}
+"""Generic browser and visualizer for digital objects."""
 
-{%- block page_body %}
-TODO: Example template, please remove if you do not need it.
-{{_('Welcome to %(module_name)s', module_name=module_name)}}
-{%- endblock %}
+import json
+import os
+
+import poppler._mypoppler as poppler
+import pytest
+
+
+@pytest.yield_fixture()
+def simple_document_path():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__), '../data/document.pdf')
+    yield path
+
+
+@pytest.yield_fixture()
+def json_toc_res():
+    """Get json toc for tests."""
+    path = os.path.join(os.path.dirname(__file__), '../data/toc.json')
+    with open(path) as f:
+        data = json.load(f)
+    yield data
+
+
+@pytest.yield_fixture()
+def text_page():
+    """Get text for tests."""
+    path = os.path.join(os.path.dirname(__file__), '../data/text.txt')
+    with open(path, 'r') as f:
+        data = f.read().replace('\n', ' ')
+    yield data

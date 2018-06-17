@@ -22,14 +22,30 @@
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
-"""Test example app."""
-from __future__ import absolute_import, print_function
+"""Tests from api ImageProcessor."""
 
-import os
-import signal
-import subprocess
-import time
-from os.path import abspath, dirname, join
+from invenio_multivio.image.api import ImageProcessor
 
-import pytest
-from flask import Flask, url_for
+
+def test_image(simple_pil_image):
+    """Test poppler document creation."""
+    assert simple_pil_image
+
+
+def test_image_pocessor(simple_pil_image, simple_path_tests):
+    """Test poppler document creation."""
+    img = ImageProcessor(simple_pil_image, simple_path_tests)
+    assert img
+    sizes = img.get_sizes()
+    assert sizes == {'height': 200, 'width': 320}
+    metadata = img.get_metadata()
+    assert metadata == {'defaultNativeSize': (320, 200),
+                        'fileSize': 26909,
+                        'mime': 'image/jpeg',
+                        'title': '320x200.jpg'}
+    file_size = img.get_file_size()
+    assert file_size == 26909
+    img.rotate(90)
+    sizes_rotate = img.pil_img.size
+    assert sizes_rotate == (200, 320)
+    assert len(img.jpeg.read()) == 17921

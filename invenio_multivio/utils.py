@@ -1,4 +1,5 @@
-{#
+# -*- coding: utf-8 -*-
+#
 # This file is part of Invenio.
 # Copyright (C) 2018 RERO.
 #
@@ -20,11 +21,18 @@
 # In applying this license, RERO does not
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
-#}
 
-{%- extends config.MULTIVIO_BASE_TEMPLATE %}
+"""Generic browser and visualizer for digital objects."""
 
-{%- block page_body %}
-TODO: Example template, please remove if you do not need it.
-{{_('Welcome to %(module_name)s', module_name=module_name)}}
-{%- endblock %}
+import os
+
+from flask import abort, current_app
+
+
+def from_static(filename):
+    """Get static folder."""
+    static_path = current_app.extensions['collect'].static_root
+    path = os.path.join(static_path, filename)
+    if not os.path.exists(path):
+        return None
+    return path

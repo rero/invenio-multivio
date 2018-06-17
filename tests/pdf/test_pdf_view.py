@@ -1,4 +1,5 @@
-{#
+# -*- coding: utf-8 -*-
+#
 # This file is part of Invenio.
 # Copyright (C) 2018 RERO.
 #
@@ -20,11 +21,15 @@
 # In applying this license, RERO does not
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
-#}
 
-{%- extends config.MULTIVIO_BASE_TEMPLATE %}
+"""Test example app."""
+from __future__ import absolute_import, print_function
 
-{%- block page_body %}
-TODO: Example template, please remove if you do not need it.
-{{_('Welcome to %(module_name)s', module_name=module_name)}}
-{%- endblock %}
+import os
+import signal
+import subprocess
+import time
+from os.path import abspath, dirname, join
+
+import pytest
+from flask import Flask, url_for

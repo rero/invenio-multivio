@@ -31,9 +31,7 @@ import json
 import subprocess
 from io import BytesIO
 
-from flask import Blueprint, jsonify, render_template, send_file, current_app, abort
-from flask_babelex import gettext as _
-import urllib3
+from flask import Blueprint, abort, current_app, jsonify, request, send_file
 
 from .api import PDF
 
@@ -41,85 +39,130 @@ from .api import PDF
 views = Blueprint(
     'pdf_views',
     __name__,
-    url_prefix="/pdf",
+    url_prefix="/api-pdf",
 )
 
 # ---------------------------- API Routes -------------------------------------
 
 
-@views.route('/<path:path_pdf>/page/text/', methods=['GET'])
-@views.route('/<path:path_pdf>/page/<number_page>/text/', methods=['GET'])
-def get_text_pdf(path_pdf, number_page=1):
+@views.route('/text/<path:path_pdf>/', methods=['GET'])
+def get_text_pdf(path_pdf):
     """Get text from the pdf."""
-    http = urllib3.PoolManager()
-    r = http.request('GET', path_pdf)
-    pdf = PDF(r.data, int(number_page)-1)
-    pdf.loadPDF()
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    page_nr = request.args.get('page_nr')
+    path = file_to_path(path_pdf)
+    if page_nr:
+        page_number = int(page_nr)
+        pdf = PDF(path, page_number)
+    else:
+        pdf = PDF(path)
+    pdf.load()
     resp = pdf.get_text_page()
     return resp
 
 
-@views.route('/<path:path_pdf>/toc/', methods=['GET'])
-def get_toc_pdf(path_pdf, number_page=1):
+@views.route('/find/<path:path_pdf>/', methods=['GET'])
+def find_text(path_pdf):
+    """Find text position from the pdf."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    page_nr = request.args.get('page_nr')
+    string = request.args.get('string')
+    path = file_to_path(path_pdf)
+    if not path:
+        abort(404)
+    if page_nr:
+        page_number = int(page_nr)
+        pdf = PDF(path, page_number)
+    else:
+        pdf = PDF(path)
+    pdf.load()
+    resp = pdf.find_text_page(str(string))
+    return jsonify(resp)
+
+
+@views.route('/toc/<path:path_pdf>/', methods=['GET'])
+def get_toc_pdf(path_pdf):
     """Get toc from the pdf."""
-    http = urllib3.PoolManager()
-    r = http.request('GET', path_pdf)
-    pdf = PDF(r.data)
-    pdf.loadPDF()
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path_pdf)
+    if not path:
+        abort(404)
+    pdf = PDF(path)
+    pdf.load()
     resp = pdf.get_toc()
     json_data = json.dumps(resp)
     return json_data
 
 
-@views.route('/info/', methods=['GET'])
-def get_info_pdf(number_page=1):
+@views.route('/metadata/<path:path_pdf>/', methods=['GET'])
+def get_metadata_pdf(path_pdf):
     """Get info from the pdf."""
-    # http = urllib3.PoolManager()
-    #r = http.request('GET', path_pdf)
-    pdf = PDF("r.data")
-    pdf.loadPDF()
-    resp = pdf.get_info()
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path_pdf)
+    if not path:
+        abort(404)
+    pdf = PDF(path)
+    pdf.load()
+    resp = pdf.get_metadata()
     json_data = json.dumps(resp)
     return json_data
 
 
-@views.route('/<path:path_pdf>/page/find/<string>/', methods=['GET'])
-@views.route('/<path:path_pdf>/page/<number_page>/find/<string>/', methods=['GET'])
-def find_text(path_pdf, string, number_page=-1):
-    """Find text position from the pdf."""
-    http = urllib3.PoolManager()
-    r = http.request('GET', path_pdf)
-    if int(number_page) == -1:
-        pdf = PDF(r.data, -1)
-    else:
-        pdf = PDF(r.data, int(number_page)-1)
-    pdf.loadPDF()
-    resp = pdf.find_text_page(str(string))
-    return resp
-
-
-@views.route('/<path:path_pdf>/page/image/', methods=['GET'])
-@views.route('/<path:path_pdf>/page/<number_page>/image/', methods=['GET'])
-def get_image_pdf(path_pdf, number_page=1):
-    """Get image from the pdf."""
-    http = urllib3.PoolManager()
-    r = http.request('GET', path_pdf)
-
-    return r.data
-
-
-@views.route('/render/<int:page_number>/<path:path>', methods=['GET'])
-def render_page(path, page_number=1):
-    """Get image from the pdf."""
+@views.route('/sizes/<path:path_pdf>/', methods=['GET'])
+def get_size_pdf(path_pdf):
+    """Get info from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
-
-    path = file_to_path(path)
+    page_nr = request.args.get('page_nr')
+    path = file_to_path(path_pdf)
     if not path:
         abort(404)
-    doc = PDF(path)
-    doc.load()
-    img = doc.render_page(page_number)
-    data = BytesIO()
-    img.save(data, 'jpeg')
-    data.seek(0)
-    return send_file(data, mimetype='image/jpeg')
+    if page_nr:
+        page_number = int(page_nr)
+    else:
+        page_number = 1
+    pdf = PDF(path, page_number)
+    pdf.load()
+    return jsonify(pdf.get_sizes())
+
+
+@views.route('/indexing/<path:path_pdf>/', methods=['GET'])
+def get_indexing_pdf(path_pdf):
+    """Get info from the pdf."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    page_nr = request.args.get('page_nr')
+    path = file_to_path(path_pdf)
+    if not path:
+        abort(404)
+    if page_nr:
+        page_number = int(page_nr)
+    else:
+        page_number = 1
+    pdf = PDF(path, page_number)
+    pdf.load()
+    return "TO_IMPLEMENT"  # TODO
+
+
+@views.route('/render/<path:path_pdf>/', methods=['GET'])
+def render_page(path_pdf):
+    """Get image from the pdf."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    page_nr = request.args.get('page_nr')
+    angle = request.args.get('angle')
+    max_width = request.args.get('max_width')
+    max_height = request.args.get('max_height')
+    path = file_to_path(path_pdf)
+    if not path:
+        abort(404)
+    if page_nr:
+        page_number = page_nr
+    else:
+        page_number = 1
+    pdf = PDF(path, page_number)
+    pdf.load()
+    if max_width and max_height:
+        pdf.render_page(max_width, max_height)
+    else:
+        pdf.render_page(pdf.get_width(), pdf.get_height())
+    if angle:
+        pdf.rotate(int(angle))
+    return send_file(pdf.jpeg, mimetype='image/jpeg')
