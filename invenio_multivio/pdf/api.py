@@ -48,7 +48,7 @@ class PDF():
         """Initialize the object."""
         self.path = path
         self.page_nr = int(page_nr) if page_nr is not None else None
-        self.res_Search = [[], []]
+        self.res_Search = []
         self.doc = None
         self.byte_io = BytesIO()
         self.pil_image = None
@@ -190,20 +190,30 @@ class PDF():
                                     indices = self._find_sublist(words,
                                                                  tmpListe)
                                     for j in indices:
-                                        bboxRes = list(
-                                            [bboxList[j][0],
-                                             bboxList[j][1],
-                                             bboxList[j+len(words)-1][2],
-                                             bboxList[j][3]]
-                                        )
-                                        self.res_Search[0].append(bboxRes)
-                                        self.res_Search[1].append(p.page_no)
+                                        bboxRes = {
+                                            "x1": bboxList[j][0],
+                                            "y1": bboxList[j][1],
+                                            "x2": bboxList[j+len(words)-1][2],
+                                            "y2": bboxList[j][3]
+                                        }
+                                        self.res_Search.append(
+                                            {"BBox": bboxRes,
+                                             "page": p.page_no,
+                                             "text": l.text})
                                 else:
                                     indices = [i for i, s in enumerate(
                                         tmpListe) if stringToFind in s]
                                     for i in indices:
-                                        self.res_Search[0].append(bboxList[i])
-                                        self.res_Search[1].append(p.page_no)
+                                        bboxRes = {
+                                            "x1": bboxList[i][0],
+                                            "y1": bboxList[i][1],
+                                            "x2": bboxList[i][2],
+                                            "y2": bboxList[i][3]
+                                        }
+                                        self.res_Search.append(
+                                            {"BBox": bboxRes,
+                                             "page": p.page_no,
+                                             "text": l.text})
         return self.res_Search
 
     def _find_sublist(self, sub, list):
