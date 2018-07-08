@@ -147,8 +147,7 @@ class PDF():
         metadata['mime'] = 'application/pdf'
         metadata['nPages'] = self.doc.getNumPages()
         metadata['fileSize'] = os.stat(self.path).st_size
-        metadata['defaultNativeSize'], metadata['nativeSize'] =\
-            self._get_native_size()
+        metadata['nativeSize'] = self._get_native_size()
         return metadata
 
     def _parse_layout(self, stringToFind):

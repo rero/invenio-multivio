@@ -28,7 +28,7 @@ from __future__ import absolute_import, print_function
 
 import json
 
-from flask import Blueprint, current_app, jsonify, render_template
+from flask import Blueprint, abort, current_app, jsonify, render_template
 from flask_babelex import gettext as _
 from PIL import Image as PIL_Image
 

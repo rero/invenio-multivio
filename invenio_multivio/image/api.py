@@ -56,7 +56,7 @@ class ImageProcessor():
         metadata['title'] = self.path.split('/')[-1]
         metadata['mime'] = "image/jpeg"
         metadata['fileSize'] = self.get_file_size()
-        metadata['defaultNativeSize'] = (self.width, self.height)
+        metadata['nativeSize'] = (self.width, self.height)
         return metadata
 
     def get_sizes(self):
@@ -80,4 +80,4 @@ class ImageProcessor():
 
     def thumbnail(self, size):
         """Create the thumbnail."""
-        self.pil_img = self.pil_img.thumbnail(size, PILImage.ANTIALIAS)
+        self.pil_img.thumbnail(size, PILImage.ANTIALIAS)

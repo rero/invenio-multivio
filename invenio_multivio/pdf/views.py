@@ -31,7 +31,7 @@ import json
 import subprocess
 from io import BytesIO
 
-from flask import Blueprint, abort, current_app, jsonify, request, send_file
+from flask import Blueprint, abort, current_app, jsonify, request, send_file, send_from_directory
 
 from .api import PDF
 
@@ -142,6 +142,14 @@ def get_indexing_pdf(path_pdf):
     return "TO_IMPLEMENT"  # TODO
 
 
+@views.route('/download/<path:path_pdf>/', methods=['GET'])
+def download(path_pdf):
+    """Dwnload the pdf."""
+    file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
+    path = file_to_path(path_pdf)
+    return send_file(path, mimetype='application/pdf', as_attachment=True)
+
+
 @views.route('/render/<path:path_pdf>/', methods=['GET'])
 def render_page(path_pdf):
     """Get image from the pdf."""
@@ -160,7 +168,7 @@ def render_page(path_pdf):
     pdf = PDF(path, page_number)
     pdf.load()
     if max_width and max_height:
-        pdf.render_page(max_width, max_height)
+        pdf.render_page(int(max_width), int(max_height))
     else:
         pdf.render_page(pdf.get_width(), pdf.get_height())
     if angle:

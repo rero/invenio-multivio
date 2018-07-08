@@ -62,6 +62,7 @@ class JsonProcessor():
         metadata['creator'].extend([v for v in
                                     self._get_fields(tag='700', code='a')])
         metadata['language'] = self._get_fields(tag='041', code='a')[0]
+        metadata['mime'] = self._get_fields(tag='856', code='q')[0]
         return metadata
 
     def get_physical_structure(self):
