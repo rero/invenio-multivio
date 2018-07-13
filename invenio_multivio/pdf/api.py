@@ -53,6 +53,7 @@ class PDF():
         self.byte_io = BytesIO()
         self.pil_image = None
         self.rendered_page = None
+        self.results_found = 0
 
     def load(self):
         """Loading the pdf."""
@@ -199,6 +200,7 @@ class PDF():
                                             {"BBox": bboxRes,
                                              "page": p.page_no,
                                              "text": l.text})
+                                        self.results_found += 1
                                 else:
                                     indices = [i for i, s in enumerate(
                                         tmpListe) if stringToFind in s]
@@ -213,6 +215,9 @@ class PDF():
                                             {"BBox": bboxRes,
                                              "page": p.page_no,
                                              "text": l.text})
+                                        self.results_found += 1
+                                if self.results_found == 100:
+                                    return self.res_Search
         return self.res_Search
 
     def _find_sublist(self, sub, list):
