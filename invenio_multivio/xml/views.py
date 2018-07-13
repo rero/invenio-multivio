@@ -53,7 +53,6 @@ def get_metadata(path):
         abort(404)
     xml = XMLProcessor(path)
     res = xml.get_metadata()
-    res["mime"] = "text/xml"
     return jsonify(res)
 
 

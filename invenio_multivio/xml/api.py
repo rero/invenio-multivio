@@ -74,6 +74,8 @@ class XMLProcessor():
         metadata['creator'].extend([v.decode('utf-8') for v in
                                     self._get_fields(record, tag='700',
                                                      code='a')])
+        metadata['mime'] = self._get_fields(record, tag='856',
+                                            code='q')[0].decode('utf-8')
         lang = self._get_fields(record, tag='041', code='a')
         if len(lang) == 1:
             metadata['language'] = lang[0].decode('utf-8')
