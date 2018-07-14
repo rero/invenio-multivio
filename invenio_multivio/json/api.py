@@ -49,7 +49,7 @@ class JsonProcessor():
             self.data = json.load(f)
         if 'record' not in self.data['collection']:
             raise ValueError(
-                "XML/Marc Core document should contains at lease one record!")
+                "JSON document should contains at lease one record!")
         return self.data
 
     def get_metadata(self):
@@ -62,7 +62,9 @@ class JsonProcessor():
         metadata['creator'].extend([v for v in
                                     self._get_fields(tag='700', code='a')])
         metadata['language'] = self._get_fields(tag='041', code='a')[0]
-        metadata['mime'] = self._get_fields(tag='856', code='q')[0]
+        metadata['mime_docs'] = [v for v in
+                                 self._get_fields(tag='856', code='q')]
+        metadata['mime'] = "application/json"
         return metadata
 
     def get_physical_structure(self):
