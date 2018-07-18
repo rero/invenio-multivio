@@ -39,24 +39,6 @@ def test_json_get_json(app):
     with app.test_request_context():
         with app.test_client() as client:
             assert True
-            # res = client.get(url_for('json_views.get_json'))
-            # assert res.status_code == 200
-            # assert res.data == b'{"key": "value"}'
-
-
-def test_json_get_marc(app):
-    with app.test_request_context():
-        with app.test_client() as client:
-            assert True
-            # res = client.get(url_for('json_views.get_marc'))
-            # assert res.status_code == 200
-
-
-def test_json_get_obkect(app):
-    with app.test_request_context():
-        with app.test_client() as client:
-            assert True
-            # res = client.get(url_for('json_views.get_json_from_object'))
-            # assert res.status_code == 200
-            # assert res.data ==
-            # b'{"pil_img": "test_pil", "byte_io": "test_io"}'
+            res = client.get('/api-json/metadata/data/json/doppler.json/')
+            assert res.status_code == 200
+            assert res.data == b'{"key": "value"}'

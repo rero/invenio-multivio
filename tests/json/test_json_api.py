@@ -38,7 +38,9 @@ def test_json_metadata(simple_json):
     res = json.get_metadata()
     assert res == {'creator': ['Comte, David', 'Kandaswamy, Djano'],
                    'language': 'fre',
-                   'title': "Implémentation embarquée d'un signal Doppler"}
+                   'title': "Implémentation embarquée d'un signal Doppler",
+                   'mime': 'application/json',
+                   'mime_docs': ['application/pdf']}
 
 
 def test_json_physical(simple_json):

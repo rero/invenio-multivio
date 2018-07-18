@@ -39,7 +39,7 @@ def test_image_pocessor(simple_pil_image, simple_path_tests):
     sizes = img.get_sizes()
     assert sizes == {'height': 200, 'width': 320}
     metadata = img.get_metadata()
-    assert metadata == {'defaultNativeSize': (320, 200),
+    assert metadata == {'nativeSize': (320, 200),
                         'fileSize': 26909,
                         'mime': 'image/jpeg',
                         'title': '320x200.jpg'}

@@ -49,10 +49,9 @@ def test_document_metadata(simple_document_path):
     pdf.load()
     resp = pdf.get_metadata()
     assert resp == {'creator': 'Miguel Moreira',
-                    'defaultNativeSize': (595.2760000000001, 841.89),
+                    'nativeSize': ((595.2760000000001, 841.89), {}),
                     'fileSize': 70909, 'mime': 'application/pdf',
                     'nPages': 3,
-                    'nativeSize': {},
                     'title': 'Multivio: Project description'}
 
 
@@ -93,8 +92,14 @@ def test_document_find(simple_document_path):
     pdf = PDF(simple_document_path, 1)
     pdf.load()
     resp = pdf.find_text_page(str('Multivio is'))
-    assert resp == [[[124.80199999999999, 287.6239556,
-                      171.2336935600001, 296.4707444]], [1]]
+    assert resp == [{'BBox': {
+        'x1': 124.80199999999999,
+        'x2': 171.2336935600001,
+        'y1': 287.6239556,
+        'y2': 296.4707444},
+        'page': 1,
+        'text': 'Multivio is an Internet-based ' +
+        'application for browsing and accessing digital doc-'}]
 
 
 def test_document_find_simple(simple_document_path):
@@ -102,7 +107,18 @@ def test_document_find_simple(simple_document_path):
     pdf = PDF(simple_document_path, 1)
     pdf.load()
     resp = pdf.find_text_page(str('Multivio'))
-    assert resp == [[[196.189, 165.65651239999994,
-                      254.84358934, 180.96100299999992],
-                     [124.80199999999999, 287.6239556,
-                      161.88678224000006, 296.4707444]], [1, 1]]
+    assert resp == [
+        {'BBox': {
+            'x1': 196.189,
+            'x2': 254.84358934,
+            'y1': 165.65651239999994,
+            'y2': 180.96100299999992},
+            'page': 1,
+            'text': "Multivio: Project description"},
+        {'BBox': {
+            'x1': 124.80199999999999,
+            'y1': 287.6239556,
+            'x2': 161.88678224000006,
+            'y2': 296.4707444},
+            'page': 1, 'text': 'Multivio is an Internet-based application ' +
+            'for browsing and accessing digital doc-'}]

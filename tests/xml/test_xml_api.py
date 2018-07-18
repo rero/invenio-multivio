@@ -38,7 +38,8 @@ def test_xml_metadata(simple_xml):
     res = xml.get_metadata()
     assert res == {'creator': ['Comte, David', 'Kandaswamy, Djano'],
                    'language': 'fre',
-                   'title': "Implémentation embarquée d'un signal Doppler"}
+                   'title': "Implémentation embarquée d'un signal Doppler",
+                   'mime': 'text/xml', 'mime_docs': ['application/pdf']}
 
 
 def test_xml_physical(simple_xml):
