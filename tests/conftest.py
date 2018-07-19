@@ -32,6 +32,7 @@ import tempfile
 import pytest
 from flask import Flask
 from flask_babelex import Babel
+from invenio_assets.ext import InvenioAssets
 
 from invenio_multivio import InvenioMultivio
 from invenio_multivio.image.views import views as image_views
@@ -59,6 +60,8 @@ def base_app(instance_path):
 
     Babel(app_)
     InvenioMultivio(app_)
+    assets = InvenioAssets(app_)
+    assets.collect.collect()
 
     app_.register_blueprint(views)
     app_.register_blueprint(pdf_views, url_prefix="/pdf")

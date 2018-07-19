@@ -43,6 +43,17 @@ def test_document_toc(simple_document_path, json_toc_res):
     assert resp == json_toc_res
 
 
+def test_document_no_toc(document_no_toc_path, json_toc_res):
+    """Test search capabilities."""
+    pdf = PDF(document_no_toc_path)
+    pdf.load()
+    resp = pdf.get_toc()
+    if resp is None:
+        assert True
+    else:
+        assert False
+
+
 def test_document_metadata(simple_document_path):
     """Test search capabilities."""
     pdf = PDF(simple_document_path)
@@ -61,6 +72,14 @@ def test_document_sizes(simple_document_path):
     pdf.load()
     resp = pdf.get_sizes()
     assert resp == {'height': 841, 'width': 595}
+
+
+def test_document_indexing(simple_document_path):
+    """Test search capabilities."""
+    pdf = PDF(simple_document_path, 1)
+    pdf.load()
+    resp = pdf.get_indexing()
+    assert resp == "NotImplemented"
 
 
 def test_document_render(simple_document_path):
@@ -102,11 +121,19 @@ def test_document_find(simple_document_path):
         'application for browsing and accessing digital doc-'}]
 
 
+def test_document_find_max_result(simple_document_path):
+    """Test search capabilities."""
+    pdf = PDF(simple_document_path, 1)
+    pdf.load()
+    resp = pdf.find_text_page('a')
+    assert len(resp) == 127
+
+
 def test_document_find_simple(simple_document_path):
     """Test search capabilities."""
     pdf = PDF(simple_document_path, 1)
     pdf.load()
-    resp = pdf.find_text_page(str('Multivio'))
+    resp = pdf.find_text_page('Multivio')
     assert resp == [
         {'BBox': {
             'x1': 196.189,

@@ -27,6 +27,7 @@
 from __future__ import absolute_import, print_function
 
 import os
+import re
 import xml.dom.minidom
 from io import BytesIO
 from xml.dom.minidom import parseString
@@ -90,7 +91,7 @@ class XMLProcessor():
         labels = self._get_fields(record, tag='856', code='z')
         if len(labels) == 0:
             for u in urls:
-                labels.append(re.sub(r'\.\w+$', '', u.split('/')[-1]))
+                labels.append(u.split('/'.encode())[-1])
         for i in range(len(urls)):
             phys_struct.append({
                 'url': urls[i].decode('utf-8'),

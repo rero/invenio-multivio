@@ -27,6 +27,7 @@ from __future__ import absolute_import, print_function
 
 import json
 import os
+import re
 import string
 import subprocess
 from io import BytesIO
@@ -125,7 +126,7 @@ class PDF():
 
     def get_indexing(self):
         """Process page to get Size of the document."""
-        return "size"
+        return "NotImplemented"
 
     def get_metadata(self):
         """Get pdf infos."""

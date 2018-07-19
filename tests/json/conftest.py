@@ -38,7 +38,16 @@ def simple_json():
 
 
 @pytest.yield_fixture()
-def simple_json_bad():
+def simple_json_no_records():
     """Get path for tests."""
-    path = os.path.join(os.path.dirname(__file__), '../data/doppler_bad.json')
+    path = os.path.join(os.path.dirname(__file__),
+                        '../data/doppler_no_records.json')
+    yield path
+
+
+@pytest.yield_fixture()
+def simple_json_no_label():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__),
+                        '../data/doppler_physical_error.json')
     yield path

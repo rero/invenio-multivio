@@ -140,7 +140,7 @@ def get_indexing_pdf(path_pdf):
         page_number = 1
     pdf = PDF(path, page_number)
     pdf.load()
-    return "TO_IMPLEMENT"  # TODO
+    return "NotImplemented"  # TODO
 
 
 @views.route('/download/<path:path_pdf>/', methods=['GET'])
@@ -148,6 +148,8 @@ def download(path_pdf):
     """Dwnload the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
     path = file_to_path(path_pdf)
+    if not path:
+        abort(404)
     return send_file(path, mimetype='application/pdf', as_attachment=True)
 
 

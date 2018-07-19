@@ -88,4 +88,6 @@ def download(path):
     """Download the image."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
     path = file_to_path(path)
+    if not path:
+        abort(404)
     return send_file(path, mimetype='image/jpeg', as_attachment=True)

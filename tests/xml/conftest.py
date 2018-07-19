@@ -34,3 +34,27 @@ def simple_xml():
     """Get path for tests."""
     path = os.path.join(os.path.dirname(__file__), '../data/doppler.xml')
     yield path
+
+
+@pytest.yield_fixture()
+def no_records_xml():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__),
+                        '../data/doppler_no_records.xml')
+    yield path
+
+
+@pytest.yield_fixture()
+def multiple_xml():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__),
+                        '../data/doppler_multiple.xml')
+    yield path
+
+
+@pytest.yield_fixture()
+def no_labels_xml():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__),
+                        '../data/doppler_no_labels.xml')
+    yield path

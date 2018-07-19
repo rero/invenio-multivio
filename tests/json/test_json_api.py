@@ -32,6 +32,16 @@ def test_json(simple_json):
     assert simple_json
 
 
+def test_json(simple_json_no_records):
+    """Test poppler document creation."""
+    assert simple_json_no_records
+
+
+def test_json(simple_json_no_label):
+    """Test poppler document creation."""
+    assert simple_json_no_label
+
+
 def test_json_metadata(simple_json):
     """Test poppler document creation."""
     json = JsonProcessor(simple_json)
@@ -51,3 +61,22 @@ def test_json_physical(simple_json):
         {'label': 'Texte intégral',
          'url':
          'http://doc.rero.ch/record/309302/files/comte_d_rapport_final.pdf'}]
+
+
+def test_json_no_label(simple_json_no_label):
+    """Test poppler document creation."""
+    json = JsonProcessor(simple_json_no_label)
+    res = json.get_physical_structure()
+    assert res == [{
+        'label': 'comte_d_rapport_final',
+        'url':
+        'http://doc.rero.ch/record/309302/files/comte_d_rapport_final.pdf'}]
+
+
+def test_json_no_records(simple_json_no_records):
+    """Test poppler document creation."""
+    json = JsonProcessor(simple_json_no_records)
+    try:
+        res = json.get_physical_structure()
+    except ValueError as e:
+        assert e

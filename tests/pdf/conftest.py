@@ -39,6 +39,13 @@ def simple_document_path():
 
 
 @pytest.yield_fixture()
+def document_no_toc_path():
+    """Get path for tests."""
+    path = os.path.join(os.path.dirname(__file__), '../data/test.pdf')
+    yield path
+
+
+@pytest.yield_fixture()
 def json_toc_res():
     """Get json toc for tests."""
     path = os.path.join(os.path.dirname(__file__), '../data/toc.json')

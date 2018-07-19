@@ -49,3 +49,6 @@ def test_image_pocessor(simple_pil_image, simple_path_tests):
     sizes_rotate = img.pil_img.size
     assert sizes_rotate == (200, 320)
     assert len(img.jpeg.read()) == 17921
+    img.thumbnail((150, 150))
+    sizes_thumbnail = img.pil_img.size
+    assert sizes_thumbnail == (93, 150)

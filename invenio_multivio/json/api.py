@@ -28,6 +28,7 @@ from __future__ import absolute_import, print_function
 
 import json
 import os
+import re
 from io import BytesIO
 
 from flask import Blueprint, jsonify, render_template, send_file
@@ -73,7 +74,8 @@ class JsonProcessor():
         record = self._get_record()
         urls = self._get_fields(tag='856', code='u')
         labels = self._get_fields(tag='856', code='z')
-        if len(labels) == 0:
+        if labels == ['']:
+            labels.clear()
             for u in urls:
                 labels.append(re.sub(r'\.\w+$', '', u.split('/')[-1]))
         for i in range(len(urls)):

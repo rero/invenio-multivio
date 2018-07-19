@@ -25,6 +25,7 @@
 """Test example app."""
 from __future__ import absolute_import, print_function
 
+import json
 import os
 import signal
 import subprocess
@@ -35,28 +36,39 @@ import pytest
 from flask import Flask, url_for
 
 
-def test_json_get_json(app):
+def test_xml_get_metadata(app):
     with app.test_request_context():
         with app.test_client() as client:
-            assert True
-            # res = client.get(url_for('json_views.get_json'))
-            # assert res.status_code == 200
-            # assert res.data == b'{"key": "value"}'
+            res = client.get('/api-xml/metadata/data/xml/doppler.xml/')
+            assert res.status_code == 200
+            data = json.loads(res.data)
+            assert data['creator'] == ['Comte, David', 'Kandaswamy, Djano']
+            assert data['language'] == "fre"
+            assert data['mime'] == "text/xml"
+            assert data['mime_docs'] == ["application/pdf"]
+            assert data['title'] == "Implémentation embarquée d'un "\
+                "signal Doppler"
 
 
-def test_json_get_marc(app):
+def test_xml_get_physical(app):
     with app.test_request_context():
         with app.test_client() as client:
-            assert True
-            # res = client.get(url_for('json_views.get_marc'))
-            # assert res.status_code == 200
+            res = client.get('/api-xml/physical/data/xml/doppler.xml/')
+            assert res.status_code == 200
+            data = json.loads(res.data)
+            assert data == [{'label': 'Texte intégral',
+                             'url': 'data/files/doppler.pdf/'}]
 
 
-def test_json_get_obkect(app):
+def test_xml_get_metadata_not_found(app):
     with app.test_request_context():
         with app.test_client() as client:
-            assert True
-            # res = client.get(url_for('json_views.get_json_from_object'))
-            # assert res.status_code == 200
-            # assert res.data ==
-            # b'{"pil_img": "test_pil", "byte_io": "test_io"}'
+            res = client.get('/api-xml/metadata/data/xml/error.xml/')
+            assert res.status_code == 404
+
+
+def test_xml_get_physical_not_found(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get('/api-xml/physical/data/xml/error.xml/')
+            assert res.status_code == 404

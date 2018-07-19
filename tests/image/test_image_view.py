@@ -23,11 +23,94 @@
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
 """Tests of Blueprint image views."""
+import json
+
 from flask import url_for
 
 
 def test_image_get_sizes(app):
     with app.test_request_context():
         with app.test_client() as client:
-            # res = client.get('/api-image/sizes/data/320x200.jpg')
-            assert True
+            res = client.get('/api-image/sizes/data/files/320x200.jpg/')
+            assert res.status_code == 200
+            data = json.loads(res.data)
+            assert data == {'height': 200, 'width': 320}
+
+
+def test_image_get_image_render(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get('/api-image/render/data/files/320x200.jpg/')
+            assert res.status_code == 200
+            assert len(res.data) == 18357
+
+
+def test_image_get_image_render_angle(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get(
+                '/api-image/render/data/files/320x200.jpg/?angle=90')
+            assert res.status_code == 200
+            assert len(res.data) == 17921
+
+
+def test_image_get_image_render_sizes(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get(
+                '/api-image/render/data/files/320x200.jpg/' +
+                '?max_width=200&max_height=200')
+            assert res.status_code == 200
+            assert len(res.data) == 6809
+
+
+def test_image_get_metadata(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get(
+                '/api-image/metadata/data/files/320x200.jpg/')
+            assert res.status_code == 200
+            data = json.loads(res.data)
+            assert data['fileSize'] == 26909
+            assert data['mime'] == "image/jpeg"
+            assert data['nativeSize'] == [320, 200]
+            assert data['title'] == "320x200.jpg"
+
+
+def test_image_get_download(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get(
+                '/api-image/download/data/files/320x200.jpg/')
+            assert res.status_code == 200
+            assert len(res.data) == 26909
+
+
+def test_image_get_bad_image_render(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get('/api-image/render/data/files/320x2000.jpg/')
+            assert res.status_code == 404
+
+
+def test_image_get_bad_image_sizes(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get('/api-image/sizes/data/files/320x2000.jpg/')
+            assert res.status_code == 404
+
+
+def test_image_get_bad_metadata(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get(
+                '/api-image/metadata/data/files/320x2000.jpg/')
+            assert res.status_code == 404
+
+
+def test_image_get_bad_download(app):
+    with app.test_request_context():
+        with app.test_client() as client:
+            res = client.get(
+                '/api-image/download/data/files/320x2000.jpg/')
+            assert res.status_code == 404
