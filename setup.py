@@ -39,7 +39,7 @@ except ImportError:
 
 poppler_ext = Extension('poppler._mypoppler', ['poppler/mypoppler.pyx'],
                         language='c++',
-                        extra_compile_args=['-I%s/include/poppler' % poppler_install_path],
+                        extra_compile_args=['-std=c++0x', '-stdlib=libc++', '-I%s/include/poppler' % poppler_install_path],
                         extra_link_args=['-lpoppler'],
                         )
 

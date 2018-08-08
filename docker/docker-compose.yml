@@ -4,7 +4,7 @@ services:
     build: .
     volumes:
        - virtualenv-data:/home/invenio/multivio
-       - /home/christian/:/home/invenio/multivio/src:cached
+       - changeit:/home/invenio/multivio/src:cached
     ports:
       - 5000:5000
     environment:
