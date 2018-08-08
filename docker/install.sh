@@ -53,6 +53,8 @@ else
     cd invenio-multivio
     pip install -r requirements-devel.txt
     pip install -e .[all]
+    pip install pillow-simd
+    pip install cython
 
     # collect and install js dependencies
     invenio npm

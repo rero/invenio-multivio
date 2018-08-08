@@ -1,0 +1,57 @@
+[
+{
+"label": "Introduction",
+"file_position": {
+"index": 1,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+},
+{
+"label": "Context",
+"file_position": {
+"index": 1,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+},
+{
+"label": "Goals",
+"childs": [
+{
+"label": "Generic",
+"page_number": 2
+}
+],
+"file_position": {
+"index": 2,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+},
+{
+"label": "Functional and complete",
+"file_position": {
+"index": 2,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+},
+{
+"label": "Flexible",
+"file_position": {
+"index": 2,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+},
+{
+"label": "Extensible and autonomous",
+"file_position": {
+"index": 3,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+},
+{
+"label": "Sponsorship",
+"file_position": {
+"index": 3,
+"path": "/home/invenio/multivio/src/invenio-multivio/tests/pdf/../data/document.pdf"
+}
+}
+]

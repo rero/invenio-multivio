@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+<record>
+  <controlfield tag="001">309302</controlfield>
+  <controlfield tag="005">20180524143941.0</controlfield>
+  <datafield tag="024" ind1="8" ind2=" ">
+    <subfield code="a">oai:doc.rero.ch:20180524141304-DS</subfield>
+    <subfield code="p">tdhes</subfield>
+    <subfield code="p">rero_explore</subfield>
+    <subfield code="p">dissertation</subfield>
+    <subfield code="z">heivs</subfield>
+    <subfield code="z">cdu6</subfield>
+  </datafield>
+  <datafield tag="041" ind1=" " ind2=" ">
+    <subfield code="a">fre</subfield>
+  </datafield>
+  <datafield tag="080" ind1=" " ind2=" ">
+    <subfield code="a">6</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">Comte, David</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">Implémentation embarquée d'un signal Doppler</subfield>
+    <subfield code="9">fre</subfield>
+  </datafield>
+  <datafield tag="502" ind1=" " ind2=" ">
+    <subfield code="a">Mémoire de bachelor : Haute Ecole d'Ingénierie, 2017</subfield>
+    <subfield code="9">2017</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="a">La LDF est une technique de vélocimétrie utilisant l’effet Doppler pour mesurer le flux  sanguin dans l’oeil. En ophtalmologie, la LDF permet, entre autres, de déterminer des  paramètres hémodynamiques utiles pour la détection de maladies dans l’oeil. Les  paramètres hémodynamiques sont : ChBVel qui est la vitesse du sang, ChBVol qui  est le volume de sang et ChBF qui est le flux du sang. Le système développé permet  l’acquisition et le traitement d’un signal Doppler sur une carte embarquée. Une  interface web pilote le système. Elle permet : De faire des mesures, de calculer les  paramètres hémodynamiques et de récupérer les résultats.</subfield>
+    <subfield code="9">fre</subfield>
+  </datafield>
+  <datafield tag="695" ind1=" " ind2=" ">
+    <subfield code="a">Instruments de mesure pour l'optique médicale et ophtalmologique (instruments d'optique) ; Effet Doppler (optique) ; Vitesse de circulation du sang (physiologie)</subfield>
+    <subfield code="9">fre</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a">Kandaswamy, Djano</subfield>
+    <subfield code="e">Dir.</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="f">comte_d_rapport_final.pdf</subfield>
+    <subfield code="q">application/pdf</subfield>
+    <subfield code="s">1494561</subfield>
+    <subfield code="u">http://doc.rero.ch/record/309302/files/comte_d_rapport_final.pdf</subfield>
+    <subfield code="y">order:1</subfield>
+    <subfield code="z">Texte intégral</subfield>
+  </datafield>
+  <datafield tag="918" ind1=" " ind2=" ">
+    <subfield code="a">Systèmes industriels - Systemtechnik</subfield>
+    <subfield code="c">Infotronics</subfield>
+    <subfield code="b">HES-SO Valais - Domaine Sciences de l'ingénieur, Route du Rawyl 47, Case postale 2134, 1950 Sion 2</subfield>
+  </datafield>
+  <datafield tag="919" ind1=" " ind2=" ">
+    <subfield code="a">Haute Ecole d'Ingénierie</subfield>
+    <subfield code="b">Sion</subfield>
+    <subfield code="d">doc.support@rero.ch</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">DISSERTATION</subfield>
+    <subfield code="b">HEIVS</subfield>
+    <subfield code="f">DISS_BACHELOR</subfield>
+  </datafield>
+  <datafield tag="990" ind1=" " ind2=" ">
+    <subfield code="a">20180524141304-DS</subfield>
+  </datafield>
+</record>
+<record>
+  <controlfield tag="001">309302</controlfield>
+  <controlfield tag="005">20180524143941.0</controlfield>
+  <datafield tag="024" ind1="8" ind2=" ">
+    <subfield code="a">oai:doc.rero.ch:20180524141304-DS</subfield>
+    <subfield code="p">tdhes</subfield>
+    <subfield code="p">rero_explore</subfield>
+    <subfield code="p">dissertation</subfield>
+    <subfield code="z">heivs</subfield>
+    <subfield code="z">cdu6</subfield>
+  </datafield>
+  <datafield tag="041" ind1=" " ind2=" ">
+    <subfield code="a">fre</subfield>
+  </datafield>
+  <datafield tag="080" ind1=" " ind2=" ">
+    <subfield code="a">6</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">Comte, David</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">Implémentation embarquée d'un signal Doppler</subfield>
+    <subfield code="9">fre</subfield>
+  </datafield>
+  <datafield tag="502" ind1=" " ind2=" ">
+    <subfield code="a">Mémoire de bachelor : Haute Ecole d'Ingénierie, 2017</subfield>
+    <subfield code="9">2017</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="a">La LDF est une technique de vélocimétrie utilisant l’effet Doppler pour mesurer le flux  sanguin dans l’oeil. En ophtalmologie, la LDF permet, entre autres, de déterminer des  paramètres hémodynamiques utiles pour la détection de maladies dans l’oeil. Les  paramètres hémodynamiques sont : ChBVel qui est la vitesse du sang, ChBVol qui  est le volume de sang et ChBF qui est le flux du sang. Le système développé permet  l’acquisition et le traitement d’un signal Doppler sur une carte embarquée. Une  interface web pilote le système. Elle permet : De faire des mesures, de calculer les  paramètres hémodynamiques et de récupérer les résultats.</subfield>
+    <subfield code="9">fre</subfield>
+  </datafield>
+  <datafield tag="695" ind1=" " ind2=" ">
+    <subfield code="a">Instruments de mesure pour l'optique médicale et ophtalmologique (instruments d'optique) ; Effet Doppler (optique) ; Vitesse de circulation du sang (physiologie)</subfield>
+    <subfield code="9">fre</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a">Kandaswamy, Djano</subfield>
+    <subfield code="e">Dir.</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="f">comte_d_rapport_final.pdf</subfield>
+    <subfield code="q">application/pdf</subfield>
+    <subfield code="s">1494561</subfield>
+    <subfield code="u">http://doc.rero.ch/record/309302/files/comte_d_rapport_final.pdf</subfield>
+    <subfield code="y">order:1</subfield>
+    <subfield code="z">Texte intégral</subfield>
+  </datafield>
+  <datafield tag="918" ind1=" " ind2=" ">
+    <subfield code="a">Systèmes industriels - Systemtechnik</subfield>
+    <subfield code="c">Infotronics</subfield>
+    <subfield code="b">HES-SO Valais - Domaine Sciences de l'ingénieur, Route du Rawyl 47, Case postale 2134, 1950 Sion 2</subfield>
+  </datafield>
+  <datafield tag="919" ind1=" " ind2=" ">
+    <subfield code="a">Haute Ecole d'Ingénierie</subfield>
+    <subfield code="b">Sion</subfield>
+    <subfield code="d">doc.support@rero.ch</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">DISSERTATION</subfield>
+    <subfield code="b">HEIVS</subfield>
+    <subfield code="f">DISS_BACHELOR</subfield>
+  </datafield>
+  <datafield tag="990" ind1=" " ind2=" ">
+    <subfield code="a">20180524141304-DS</subfield>
+  </datafield>
+</record>
+</collection>

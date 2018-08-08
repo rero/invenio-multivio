@@ -51,8 +51,26 @@ recursive-include docs *.txt
 recursive-include docs Makefile
 recursive-include examples *.py
 recursive-include examples *.sh
-recursive-include invenio_multivio *.html
+
+recursive-include invenio_multivio *.html *.py
 recursive-include tests *.py
+include Dockerfile
+recursive-include docker *.env
+recursive-include invenio_multivio *.jpg
+recursive-include invenio_multivio *.json
+recursive-include invenio_multivio *.pdf
+recursive-include invenio_multivio *.xml
+recursive-include poppler *.pyx
+recursive-include tests *.jpg
+recursive-include tests *.json
+recursive-include tests *.pdf
+recursive-include tests *.xml
+recursive-include tests *.txt
+
+exclude poppler/mypoppler.cpp
+exclude invenio_multivio/static/data/json/*.*
+exclude invenio_multivio/static/data/xml/*.*
+exclude invenio_multivio/static/data/files/*.*
 
 # added by check_manifest.py
 recursive-include docker *.sh

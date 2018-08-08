@@ -25,8 +25,23 @@
 """Generic browser and visualizer for digital objects."""
 
 import os
+import sys
 
-from setuptools import find_packages, setup
+from setuptools import Extension, find_packages, setup
+
+poppler_install_path = '/usr/local'
+
+try:
+    from Cython.Build import cythonize
+except ImportError:
+    print('You need to install cython first - pip install cython', file=sys.stderr)
+    sys.exit(1)
+
+poppler_ext = Extension('poppler._mypoppler', ['poppler/mypoppler.pyx'],
+                        language='c++',
+                        extra_compile_args=['-I%s/include/poppler' % poppler_install_path],
+                        extra_link_args=['-lpoppler'],
+                        )
 
 readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
@@ -61,9 +76,12 @@ setup_requires = [
 install_requires = [
     'Flask-BabelEx>=0.9.2',
     'redis',
-    'invenio-app>=1.0.0b2',
-    'invenio-i18n>=1.0.0b4',
-    'invenio-assets>=v1.0.0b7'
+    'invenio-app>=1.0.0',
+    'invenio-i18n>=1.0.0',
+    'invenio-assets>=v1.0.0',
+    'invenio-theme>=v1.0.0',
+    'pillow-simd<5.0.0',
+    'cython>=0.28.0'
 ]
 
 packages = find_packages()
@@ -85,7 +103,10 @@ setup(
     author='RERO',
     author_email='software@rero.ch',
     url='https://github.com/rero/invenio-multivio',
-    packages=packages,
+    ext_modules=cythonize([poppler_ext]),
+    packages=[
+        'invenio_multivio'
+    ],
     zip_safe=False,
     include_package_data=True,
     platforms='any',

@@ -21,14 +21,19 @@
 # In applying this license, RERO does not
 # waive the privileges and immunities granted to it by virtue of its status
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
-
 """Generic browser and visualizer for digital objects."""
+import os
 
-# TODO: This is an example file. Remove it if your package does not use any
-# extra configuration variables.
+from .utils import from_static
+
+# TODO: remove
+SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 MULTIVIO_DEFAULT_VALUE = 'foobar'
 """Default value for the application."""
 
 MULTIVIO_BASE_TEMPLATE = 'invenio_multivio/base.html'
 """Default base template for the demo page."""
+
+MULTIVIO_FILENAME_TO_PATH = from_static
+# TODO helper to find file fileLoaderFunction (chargement dynamique)

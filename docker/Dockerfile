@@ -10,6 +10,29 @@ RUN apt-get update && apt-get install -y curl gnupg \
     pip install -U virtualenv && \
     npm install -g node-sass clean-css clean-css-cli requirejs uglify-js
 
+# Install dependencies
+RUN apt-get -qy install --fix-missing --no-install-recommends \
+    g++ cmake make git\
+    fontconfig libfontconfig1-dev zlib1g zlib1g-dev libpng-dev lib32z1-dev\
+    libjpeg-dev libtiff-dev libopenjp2-7-dev
+
+WORKDIR /code
+
+# Poppler
+RUN git clone git://git.freedesktop.org/git/poppler/poppler
+
+WORKDIR /code/poppler
+
+RUN mkdir -p /code/poppler/build && cd /code/poppler/build \
+	&& cmake -Wno-dev -D ENABLE_XPDF_HEADERS=True ../ \
+    	&& make -j 2 install
+
+# make libpoppler globally available
+RUN ldconfig /usr/local/lib
+# WORKDIR /home/invenio/multivio/src/invenio-multivio/
+# RUN echo "$PWD"
+# COPY ./../setup.py .
+# RUN pip install --global-option=build_ext .
 
 # # Run container as user `invenio` with UID `1000`, which should match
 # # current host user in most situations:
