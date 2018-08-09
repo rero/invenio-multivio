@@ -27,7 +27,6 @@
 import json
 import os
 
-import poppler._mypoppler as poppler
 import pytest
 
 

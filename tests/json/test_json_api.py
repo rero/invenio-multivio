@@ -32,12 +32,12 @@ def test_json(simple_json):
     assert simple_json
 
 
-def test_json(simple_json_no_records):
+def test_json_simple_no_records(simple_json_no_records):
     """Test poppler document creation."""
     assert simple_json_no_records
 
 
-def test_json(simple_json_no_label):
+def test_json_simple(simple_json_no_label):
     """Test poppler document creation."""
     assert simple_json_no_label
 
@@ -77,6 +77,6 @@ def test_json_no_records(simple_json_no_records):
     """Test poppler document creation."""
     json = JsonProcessor(simple_json_no_records)
     try:
-        res = json.get_physical_structure()
+        json.get_physical_structure()
     except ValueError as e:
         assert e

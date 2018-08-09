@@ -32,12 +32,12 @@ def test_xml(simple_xml):
     assert simple_xml
 
 
-def test_xml(no_records_xml):
+def test_xml_no_records(no_records_xml):
     """Test poppler document creation."""
     assert no_records_xml
 
 
-def test_xml(multiple_xml):
+def test_xml_multiple(multiple_xml):
     """Test poppler document creation."""
     assert multiple_xml
 
@@ -76,7 +76,7 @@ def test_xml_physical_no_records(no_records_xml):
     """Test poppler document creation."""
     xml = XMLProcessor(no_records_xml)
     try:
-        res = xml.get_physical_structure()
+        xml.get_physical_structure()
     except ValueError as e:
         assert e
 
@@ -85,6 +85,6 @@ def test_xml_physical_multiple(multiple_xml):
     """Test poppler document creation."""
     xml = XMLProcessor(multiple_xml)
     try:
-        res = xml.get_physical_structure()
+        xml.get_physical_structure()
     except ValueError as e:
         assert e

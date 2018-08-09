@@ -26,14 +26,6 @@
 from __future__ import absolute_import, print_function
 
 import json
-import os
-import signal
-import subprocess
-import time
-from os.path import abspath, dirname, join
-
-import pytest
-from flask import Flask, url_for
 
 
 def test_xml_get_metadata(app):
@@ -41,7 +33,7 @@ def test_xml_get_metadata(app):
         with app.test_client() as client:
             res = client.get('/api-xml/metadata/data/xml/doppler.xml/')
             assert res.status_code == 200
-            data = json.loads(res.data)
+            data = json.loads(res.get_data(as_text=True))
             assert data['creator'] == ['Comte, David', 'Kandaswamy, Djano']
             assert data['language'] == "fre"
             assert data['mime'] == "text/xml"
@@ -55,7 +47,7 @@ def test_xml_get_physical(app):
         with app.test_client() as client:
             res = client.get('/api-xml/physical/data/xml/doppler.xml/')
             assert res.status_code == 200
-            data = json.loads(res.data)
+            data = json.loads(res.get_data(as_text=True))
             assert data == [{'label': 'Texte intégral',
                              'url': 'data/files/doppler.pdf/'}]
 

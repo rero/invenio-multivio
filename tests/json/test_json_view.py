@@ -27,16 +27,13 @@ from __future__ import absolute_import, print_function
 
 import json
 
-import pytest
-from flask import Flask, url_for
-
 
 def test_json_get_metadata(app):
     with app.test_request_context():
         with app.test_client() as client:
             res = client.get('/api-json/metadata/data/json/doppler.json/')
             assert res.status_code == 200
-            data = json.loads(res.data)
+            data = json.loads(res.get_data(as_text=True))
             assert data['creator'] == ['Comte, David', 'Kandaswamy, Djano']
             assert data['language'] == "fre"
             assert data['mime'] == "application/json"
@@ -50,7 +47,7 @@ def test_json_get_physical(app):
         with app.test_client() as client:
             res = client.get('/api-json/physical/data/json/doppler.json/')
             assert res.status_code == 200
-            data = json.loads(res.data)
+            data = json.loads(res.get_data(as_text=True))
             assert data == [{'label': 'Texte intégral',
                              'url': 'data/files/doppler.pdf/'}]
 

@@ -26,11 +26,7 @@
 # ---------------------------- Modules ---------------------------------------
 from __future__ import absolute_import, print_function
 
-import json
-
-from flask import Blueprint, abort, current_app, jsonify, render_template
-from flask_babelex import gettext as _
-from PIL import Image as PIL_Image
+from flask import Blueprint, abort, current_app, jsonify
 
 from .api import JsonProcessor
 
@@ -51,8 +47,8 @@ def get_metadata(path):
     path = file_to_path(path)
     if not path:
         abort(404)
-    json = JsonProcessor(path)
-    res = json.get_metadata()
+    _json = JsonProcessor(path)
+    res = _json.get_metadata()
     return jsonify(res)
 
 
@@ -63,6 +59,6 @@ def get_physical_structure(path):
     path = file_to_path(path)
     if not path:
         abort(404)
-    json = JsonProcessor(path)
-    res = json.get_physical_structure()
+    _json = JsonProcessor(path)
+    res = _json.get_physical_structure()
     return jsonify(res)

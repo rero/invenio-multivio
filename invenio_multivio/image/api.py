@@ -29,8 +29,6 @@ from __future__ import absolute_import, print_function
 import os
 from io import BytesIO
 
-from flask import Blueprint, jsonify, render_template, send_file
-from flask_babelex import gettext as _
 from PIL import Image as PILImage
 
 

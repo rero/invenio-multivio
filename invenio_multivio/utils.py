@@ -26,7 +26,7 @@
 
 import os
 
-from flask import abort, current_app
+from flask import current_app
 
 
 def from_static(filename):

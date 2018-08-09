@@ -27,11 +27,7 @@
 from __future__ import absolute_import, print_function
 
 import json
-import os
 import re
-from io import BytesIO
-
-from flask import Blueprint, jsonify, render_template, send_file
 
 # ---------------------------- Class ---------------------------------------
 
@@ -55,7 +51,7 @@ class JsonProcessor():
 
     def get_metadata(self):
         """Get metada infos."""
-        record = self._get_record()
+        self._get_record()
         metadata = {}
         metadata['title'] = self._get_fields(tag='245', code='a')[0]
         metadata['creator'] = [v for v in
@@ -71,7 +67,7 @@ class JsonProcessor():
     def get_physical_structure(self):
         """Get the physical structure of the object."""
         phys_struct = []
-        record = self._get_record()
+        self._get_record()
         urls = self._get_fields(tag='856', code='u')
         labels = self._get_fields(tag='856', code='z')
         if labels == ['']:

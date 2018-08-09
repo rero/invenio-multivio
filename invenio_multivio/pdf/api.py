@@ -25,19 +25,13 @@
 # ---------------------------- Modules ---------------------------------------
 from __future__ import absolute_import, print_function
 
-import json
 import os
 import re
 import string
-import subprocess
 from io import BytesIO
 
-from flask import Blueprint, jsonify, render_template
-from flask_babelex import gettext as _
 from PIL import Image as PIL_Image
 from poppler import _mypoppler as poppler
-
-from ..image.api import ImageProcessor
 
 # ---------------------------- Class ---------------------------------------
 
@@ -194,7 +188,8 @@ class PDF():
                                         bboxRes = {
                                             "x1": bboxList[j][0],
                                             "y1": bboxList[j][1],
-                                            "x2": bboxList[j+len(words)-1][2],
+                                            "x2": bboxList[j +
+                                                           len(words) - 1][2],
                                             "y2": bboxList[j][3]
                                         }
                                         self.res_Search.append(
@@ -233,7 +228,7 @@ class PDF():
         try:
             while True:
                 pos = list.index(first, pos) + 1
-                if not rest or list[pos:pos+len(rest)] == rest:
+                if not rest or list[pos:pos + len(rest)] == rest:
                     indices.append(pos - 1)
         except ValueError:
             return indices
@@ -244,7 +239,7 @@ class PDF():
             page_nr = entry['page_number']
             entry['file_position'] = {
                 'index': page_nr,
-                'path': self.path
+                # 'path': self.path
             }
             del entry['page_number']
             if 'childs ' in entry:

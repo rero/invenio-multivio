@@ -28,11 +28,8 @@
 from __future__ import absolute_import, print_function
 
 import json
-import subprocess
-from io import BytesIO
 
-from flask import Blueprint, abort, current_app, jsonify, request, send_file, \
-    send_from_directory
+from flask import Blueprint, abort, current_app, jsonify, request, send_file
 
 from .api import PDF
 

@@ -27,6 +27,8 @@
 import os
 import sys
 
+from __future__ import print_function
+
 from setuptools import Extension, find_packages, setup
 
 poppler_install_path = '/usr/local'
@@ -34,14 +36,23 @@ poppler_install_path = '/usr/local'
 try:
     from Cython.Build import cythonize
 except ImportError:
-    print('You need to install cython first - pip install cython', file=sys.stderr)
+    print(
+        'You need to install cython first - pip install cython',
+        file=sys.stderr,
+    )
     sys.exit(1)
 
-poppler_ext = Extension('poppler._mypoppler', ['poppler/mypoppler.pyx'],
-                        language='c++',
-                        extra_compile_args=['-std=c++0x', '-stdlib=libc++', '-I%s/include/poppler' % poppler_install_path],
-                        extra_link_args=['-lpoppler'],
-                        )
+poppler_ext = Extension(
+    'poppler._mypoppler',
+    ['poppler/mypoppler.pyx'],
+    language='c++',
+    extra_compile_args=[
+        '-std=c++0x',
+        '-stdlib=libc++',
+        '-I%s/include/poppler' % poppler_install_path,
+    ],
+    extra_link_args=['-lpoppler'],
+)
 
 readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
@@ -57,31 +68,22 @@ tests_require = [
     'pytest>=2.8.0',
 ]
 
-extras_require = {
-    'docs': [
-        'Sphinx>=1.5.1',
-    ],
-    'tests': tests_require,
-}
+extras_require = {'docs': ['Sphinx>=1.5.1'], 'tests': tests_require}
 
 extras_require['all'] = []
 for reqs in extras_require.values():
     extras_require['all'].extend(reqs)
 
-setup_requires = [
-    'Babel>=1.3',
-    'pytest-runner>=2.6.2',
-]
+setup_requires = ['Babel>=1.3', 'pytest-runner>=2.6.2']
 
 install_requires = [
     'Flask-BabelEx>=0.9.2',
-    'redis',
     'invenio-app>=1.0.0',
     'invenio-i18n>=1.0.0',
     'invenio-assets>=v1.0.0',
     'invenio-theme>=v1.0.0',
     'pillow-simd<5.0.0',
-    'cython>=0.28.0'
+    'cython>=0.28.0',
 ]
 
 packages = find_packages()
@@ -104,19 +106,15 @@ setup(
     author_email='software@rero.ch',
     url='https://github.com/rero/invenio-multivio',
     ext_modules=cythonize([poppler_ext]),
-    packages=[
-        'invenio_multivio'
-    ],
+    packages=['invenio_multivio'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
     entry_points={
         'invenio_base.apps': [
-            'invenio_multivio = invenio_multivio:InvenioMultivio',
+            'invenio_multivio = invenio_multivio:InvenioMultivio'
         ],
-        'invenio_i18n.translations': [
-            'messages = invenio_multivio',
-        ],
+        'invenio_i18n.translations': ['messages = invenio_multivio'],
         # TODO: Edit these entry points to fit your needs.
         # 'invenio_access.actions': [],
         # 'invenio_admin.actions': [],

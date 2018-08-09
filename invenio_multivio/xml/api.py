@@ -26,13 +26,7 @@
 # ---------------------------- Modules ---------------------------------------
 from __future__ import absolute_import, print_function
 
-import os
-import re
-import xml.dom.minidom
-from io import BytesIO
 from xml.dom.minidom import parseString
-
-from flask import Blueprint, jsonify, render_template, send_file
 
 # ---------------------------- Class ---------------------------------------
 
