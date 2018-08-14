@@ -43,7 +43,7 @@ views = Blueprint(
 # ---------------------------- API Routes -------------------------------------
 
 
-@views.route('/text/<path:path_pdf>/', methods=['GET'])
+@views.route('/text/<path:path_pdf>', strict_slashes=False)
 def get_text_pdf(path_pdf):
     """Get text from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -59,7 +59,7 @@ def get_text_pdf(path_pdf):
     return resp
 
 
-@views.route('/find/<path:path_pdf>/', methods=['GET'])
+@views.route('/find/<path:path_pdf>', strict_slashes=False)
 def find_text(path_pdf):
     """Find text position from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -78,7 +78,7 @@ def find_text(path_pdf):
     return jsonify(resp)
 
 
-@views.route('/toc/<path:path_pdf>/', methods=['GET'])
+@views.route('/toc/<path:path_pdf>', strict_slashes=False)
 def get_toc_pdf(path_pdf):
     """Get toc from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -92,7 +92,7 @@ def get_toc_pdf(path_pdf):
     return json_data
 
 
-@views.route('/metadata/<path:path_pdf>/', methods=['GET'])
+@views.route('/metadata/<path:path_pdf>', strict_slashes=False)
 def get_metadata_pdf(path_pdf):
     """Get info from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -106,7 +106,7 @@ def get_metadata_pdf(path_pdf):
     return json_data
 
 
-@views.route('/sizes/<path:path_pdf>/', methods=['GET'])
+@views.route('/sizes/<path:path_pdf>', strict_slashes=False)
 def get_size_pdf(path_pdf):
     """Get info from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -123,7 +123,7 @@ def get_size_pdf(path_pdf):
     return jsonify(pdf.get_sizes())
 
 
-@views.route('/indexing/<path:path_pdf>/', methods=['GET'])
+@views.route('/indexing/<path:path_pdf>', strict_slashes=False)
 def get_indexing_pdf(path_pdf):
     """Get info from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -140,7 +140,7 @@ def get_indexing_pdf(path_pdf):
     return "NotImplemented"  # TODO
 
 
-@views.route('/download/<path:path_pdf>/', methods=['GET'])
+@views.route('/download/<path:path_pdf>', strict_slashes=False)
 def download(path_pdf):
     """Dwnload the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -150,7 +150,7 @@ def download(path_pdf):
     return send_file(path, mimetype='application/pdf', as_attachment=True)
 
 
-@views.route('/render/<path:path_pdf>/', methods=['GET'])
+@views.route('/render/<path:path_pdf>', strict_slashes=False, methods=['GET'])
 def render_page(path_pdf):
     """Get image from the pdf."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')

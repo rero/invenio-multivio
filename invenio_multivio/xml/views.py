@@ -26,11 +26,7 @@
 # ---------------------------- Modules ---------------------------------------
 from __future__ import absolute_import, print_function
 
-import json
-
-from flask import Blueprint, abort, current_app, jsonify, render_template
-from flask_babelex import gettext as _
-from PIL import Image as PIL_Image
+from flask import Blueprint, abort, current_app, jsonify
 
 from .api import XMLProcessor
 
@@ -44,7 +40,7 @@ views = Blueprint(
 # ---------------------------- API Routes -------------------------------------
 
 
-@views.route('/metadata/<path:path>/', methods=['GET'])
+@views.route('/metadata/<path:path>', strict_slashes=False, methods=['GET'])
 def get_metadata(path):
     """Get metadata infos."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -56,7 +52,7 @@ def get_metadata(path):
     return jsonify(res)
 
 
-@views.route('/physical/<path:path>/', methods=['GET'])
+@views.route('/physical/<path:path>', strict_slashes=False, methods=['GET'])
 def get_physical_structure(path):
     """Get the physical structure ."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')

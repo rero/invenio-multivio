@@ -72,6 +72,20 @@ exclude invenio_multivio/static/data/json/*.*
 exclude invenio_multivio/static/data/xml/*.*
 exclude invenio_multivio/static/data/files/*.*
 
+exclude invenio_multivio/static/js/invenio_multivio_ui/assets
+recursive-exclude invenio_multivio/static/js/invenio_multivio_ui/assets *
+exclude invenio_multivio/static/js/invenio_multivio_ui/index.html
+
 # added by check_manifest.py
 recursive-include docker *.sh
 recursive-include docker *.yml
+
+# added by check_manifest.py
+recursive-include invenio_multivio *.eot
+recursive-include invenio_multivio *.ico
+recursive-include invenio_multivio *.js
+recursive-include invenio_multivio *.svg
+recursive-include invenio_multivio *.ttf
+recursive-include invenio_multivio *.txt
+recursive-include invenio_multivio *.woff
+recursive-include invenio_multivio *.woff2

@@ -27,6 +27,8 @@
 from __future__ import absolute_import, print_function
 
 from flask import Blueprint, abort, current_app, jsonify
+from invenio_pidstore.resolver import Resolver
+from invenio_records_files.api import Record
 
 from .api import JsonProcessor
 
@@ -40,7 +42,34 @@ views = Blueprint(
 # ---------------------------- API Routes -------------------------------------
 
 
-@views.route('/metadata/<path:path>/', methods=['GET'])
+@views.route('/<doctype>/<pid>/metadata')
+def get_metadata_from_record(doctype, pid):
+    """Get metadata infos."""
+    # resolver = Resolver(self, pid_type='', object_type='rec', getter=)
+    resolver = Resolver(doctype, 'rec', Record.get_record)
+    pid, record = resolver.resolve(pid)
+    doc = {
+        'title': record['title'][0]['main'],
+        'language': record['title'][0]['language'],
+        'mime': 'application/json'
+    }
+    for contributor in record.get('contributor', []):
+        doc.setdefault('creator', []).append(contributor.get('name'))
+    for document in record['document']:
+        doc.setdefault('mime_docs', []).append(document.get('mime'))
+    return jsonify(doc)
+
+
+@views.route('/<doctype>/<pid>/physical')
+def get_physical_from_record(doctype, pid):
+    """Get metadata infos."""
+    # resolver = Resolver(self, pid_type='', object_type='rec', getter=)
+    resolver = Resolver(doctype, 'rec', Record.get_record)
+    pid, record = resolver.resolve(pid)
+    return jsonify(record.get('document', []))
+
+
+@views.route('/metadata/<path:path>', strict_slashes=False, methods=['GET'])
 def get_metadata(path):
     """Get metadata infos."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -52,7 +81,7 @@ def get_metadata(path):
     return jsonify(res)
 
 
-@views.route('/physical/<path:path>/', methods=['GET'])
+@views.route('/physical/<path:path>', strict_slashes=False, methods=['GET'])
 def get_physical_structure(path):
     """Get the physical structure ."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')

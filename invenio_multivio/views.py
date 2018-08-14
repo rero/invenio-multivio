@@ -35,8 +35,8 @@ views = Blueprint(
 )
 
 
-@views.route("/")
-def index():
+@views.route("/multivio/<doctype>/<pid>")
+def multivio_ui(doctype, pid):
     """Render a basic view."""
     return render_template(
         "invenio_multivio/index.html",

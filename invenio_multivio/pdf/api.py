@@ -97,14 +97,14 @@ class PDF():
 
     def get_text_page(self):
         """Process page to get text contained in the document."""
-        resp = ''
+        resp = []
         for p in self.doc:
             if(p.page_no == self.page_nr or self.page_nr is None):
                 for f in p:
                     for b in f:
                         for l in b:
-                            resp += l.text + ' '
-        return resp
+                            resp.append(l.text)
+        return ' '.join(resp)
 
     def find_text_page(self, stringToFind):
         """Process page to find text contained in the document."""

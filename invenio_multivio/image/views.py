@@ -41,7 +41,7 @@ views = Blueprint(
 # ---------------------------- API Routes API ---------------------------------
 
 
-@views.route('/render/<path:path>/', methods=['GET'])
+@views.route('/render/<path:path>', strict_slashes=False, methods=['GET'])
 def get_image(path):
     """Render image."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -59,7 +59,7 @@ def get_image(path):
     return send_file(img.jpeg, mimetype='image/jpeg')
 
 
-@views.route('/sizes/<path:path>/', methods=['GET'])
+@views.route('/sizes/<path:path>', strict_slashes=False, methods=['GET'])
 def get_sizes(path):
     """Retrive sizes image."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -71,7 +71,7 @@ def get_sizes(path):
     return jsonify(sizes)
 
 
-@views.route('/metadata/<path:path>/', methods=['GET'])
+@views.route('/metadata/<path:path>', strict_slashes=False, methods=['GET'])
 def get_metadata(path):
     """Retrive metedata of the image."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')
@@ -83,7 +83,7 @@ def get_metadata(path):
     return jsonify(metadata)
 
 
-@views.route('/download/<path:path>/', methods=['GET'])
+@views.route('/download/<path:path>', strict_slashes=False, methods=['GET'])
 def download(path):
     """Download the image."""
     file_to_path = current_app.config.get('MULTIVIO_FILENAME_TO_PATH')

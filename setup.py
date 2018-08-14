@@ -23,11 +23,10 @@
 # as an Intergovernmental Organization or submit itself to any jurisdiction.
 
 """Generic browser and visualizer for digital objects."""
+from __future__ import print_function
 
 import os
 import sys
-
-from __future__ import print_function
 
 from setuptools import Extension, find_packages, setup
 
@@ -48,7 +47,8 @@ poppler_ext = Extension(
     language='c++',
     extra_compile_args=[
         '-std=c++0x',
-        '-stdlib=libc++',
+        # Macosx: please uncomment
+        #        '-stdlib=libc++',
         '-I%s/include/poppler' % poppler_install_path,
     ],
     extra_link_args=['-lpoppler'],

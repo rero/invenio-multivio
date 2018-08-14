@@ -58,5 +58,5 @@ def text_page():
     """Get text for tests."""
     path = os.path.join(os.path.dirname(__file__), '../data/text.txt')
     with open(path, 'r') as f:
-        data = f.read().replace('\n', ' ')
+        data = f.read().replace('\n', '')
     yield data
